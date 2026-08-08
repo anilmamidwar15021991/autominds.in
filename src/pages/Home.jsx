@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 // Asset Imports
 import heroBg from '../assets/d55f415d9e752ef2fa7edf6f07afac92.jpg';
@@ -20,6 +23,8 @@ const Home = () => {
   const floatingCardRef = useRef(null);
   const coursesGridRef = useRef(null);
   const statsBannerRef = useRef(null);
+  const whyHeaderRef = useRef(null);
+  const whyCardsGridRef = useRef(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -81,10 +86,111 @@ const Home = () => {
           { y: 0, opacity: 1, duration: 0.8, stagger: 0.2, ease: 'power2.out', delay: 0.5 }
         );
       }
+
+      // 4. GSAP ScrollTrigger Animation for Why AutoMinds Academy Section
+      if (whyHeaderRef.current) {
+        gsap.fromTo(
+          Array.from(whyHeaderRef.current.children),
+          { y: 35, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            stagger: 0.15,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: whyHeaderRef.current,
+              start: 'top 85%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+      }
+
+      if (whyCardsGridRef.current) {
+        const cards = Array.from(whyCardsGridRef.current.children);
+        gsap.fromTo(
+          cards,
+          { y: 50, opacity: 0, scale: 0.92, rotateX: 10 },
+          {
+            y: 0,
+            opacity: 1,
+            scale: 1,
+            rotateX: 0,
+            duration: 0.8,
+            stagger: 0.12,
+            ease: 'back.out(1.3)',
+            scrollTrigger: {
+              trigger: whyCardsGridRef.current,
+              start: 'top 85%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+
+        // Continuous subtle icon floating animation with staggered delay
+        cards.forEach((cardCol, index) => {
+          const icon = cardCol.querySelector('.glass-icon-box');
+          if (icon) {
+            gsap.to(icon, {
+              y: -6,
+              duration: 2.2 + (index % 3) * 0.3,
+              repeat: -1,
+              yoyo: true,
+              ease: 'sine.inOut',
+              delay: index * 0.15
+            });
+          }
+        });
+      }
     });
 
     return () => ctx.revert();
   }, []);
+
+  const handleWhyCardMouseEnter = (e) => {
+    const card = e.currentTarget;
+    const icon = card.querySelector('.glass-icon-box');
+    gsap.to(card, {
+      y: -10,
+      scale: 1.03,
+      borderColor: 'rgba(210, 251, 82, 0.45)',
+      boxShadow: '0 20px 40px -15px rgba(0, 0, 0, 0.8), 0 0 30px rgba(210, 251, 82, 0.2)',
+      duration: 0.35,
+      ease: 'power2.out'
+    });
+    if (icon) {
+      gsap.to(icon, {
+        scale: 1.2,
+        rotate: 12,
+        backgroundColor: 'rgba(210, 251, 82, 0.25)',
+        duration: 0.35,
+        ease: 'back.out(1.7)'
+      });
+    }
+  };
+
+  const handleWhyCardMouseLeave = (e) => {
+    const card = e.currentTarget;
+    const icon = card.querySelector('.glass-icon-box');
+    gsap.to(card, {
+      y: 0,
+      scale: 1,
+      borderColor: 'rgba(255, 255, 255, 0.08)',
+      boxShadow: 'none',
+      duration: 0.35,
+      ease: 'power2.out'
+    });
+    if (icon) {
+      gsap.to(icon, {
+        scale: 1,
+        rotate: 0,
+        backgroundColor: 'rgba(210, 251, 82, 0.08)',
+        duration: 0.35,
+        ease: 'power2.out'
+      });
+    }
+  };
 
   return (
     <div className="home-page overflow-hidden">
@@ -213,7 +319,7 @@ const Home = () => {
       {/* WHY CHOOSE US SECTION */}
       <section className="py-5 my-4 position-relative">
         <div className="container">
-          <div className="text-center mx-auto mb-5" style={{ maxWidth: '700px' }}>
+          <div className="text-center mx-auto mb-5" style={{ maxWidth: '700px' }} ref={whyHeaderRef}>
             <div className="hero-tagline-badge mb-3">
               <span className="pulse-dot"></span>
               <span className="text-uppercase tracking-wider">Why Choose Us</span>
@@ -226,10 +332,14 @@ const Home = () => {
             </p>
           </div>
 
-          <div className="row g-4">
+          <div className="row g-4" ref={whyCardsGridRef}>
             {/* 1. Industry Curriculum */}
             <div className="col-12 col-md-6 col-lg-4">
-              <div className="glass-feature-card">
+              <div 
+                className="glass-feature-card"
+                onMouseEnter={handleWhyCardMouseEnter}
+                onMouseLeave={handleWhyCardMouseLeave}
+              >
                 <div className="glass-icon-box">🧠</div>
                 <h4 className="fw-bold text-white mb-2 font-heading">Industry Curriculum</h4>
                 <p className="small mb-0">
@@ -240,7 +350,11 @@ const Home = () => {
 
             {/* 2. Live Coding */}
             <div className="col-12 col-md-6 col-lg-4">
-              <div className="glass-feature-card">
+              <div 
+                className="glass-feature-card"
+                onMouseEnter={handleWhyCardMouseEnter}
+                onMouseLeave={handleWhyCardMouseLeave}
+              >
                 <div className="glass-icon-box">💻</div>
                 <h4 className="fw-bold text-white mb-2 font-heading">Live Coding</h4>
                 <p className="small mb-0">
@@ -251,7 +365,11 @@ const Home = () => {
 
             {/* 3. Real Projects */}
             <div className="col-12 col-md-6 col-lg-4">
-              <div className="glass-feature-card">
+              <div 
+                className="glass-feature-card"
+                onMouseEnter={handleWhyCardMouseEnter}
+                onMouseLeave={handleWhyCardMouseLeave}
+              >
                 <div className="glass-icon-box">📂</div>
                 <h4 className="fw-bold text-white mb-2 font-heading">Real Projects</h4>
                 <p className="small mb-0">
@@ -262,7 +380,11 @@ const Home = () => {
 
             {/* 4. Certificate */}
             <div className="col-12 col-md-6 col-lg-4">
-              <div className="glass-feature-card">
+              <div 
+                className="glass-feature-card"
+                onMouseEnter={handleWhyCardMouseEnter}
+                onMouseLeave={handleWhyCardMouseLeave}
+              >
                 <div className="glass-icon-box">🎓</div>
                 <h4 className="fw-bold text-white mb-2 font-heading">Certificate</h4>
                 <p className="small mb-0">
@@ -273,7 +395,11 @@ const Home = () => {
 
             {/* 5. Placement */}
             <div className="col-12 col-md-6 col-lg-4">
-              <div className="glass-feature-card">
+              <div 
+                className="glass-feature-card"
+                onMouseEnter={handleWhyCardMouseEnter}
+                onMouseLeave={handleWhyCardMouseLeave}
+              >
                 <div className="glass-icon-box">🤝</div>
                 <h4 className="fw-bold text-white mb-2 font-heading">Placement</h4>
                 <p className="small mb-0">
@@ -284,7 +410,11 @@ const Home = () => {
 
             {/* 6. Mentorship */}
             <div className="col-12 col-md-6 col-lg-4">
-              <div className="glass-feature-card">
+              <div 
+                className="glass-feature-card"
+                onMouseEnter={handleWhyCardMouseEnter}
+                onMouseLeave={handleWhyCardMouseLeave}
+              >
                 <div className="glass-icon-box">👨‍🏫</div>
                 <h4 className="fw-bold text-white mb-2 font-heading">Mentorship</h4>
                 <p className="small mb-0">
@@ -486,15 +616,15 @@ const Home = () => {
             <div className="position-relative z-1 max-w-2xl mx-auto py-4">
               <span className="hero-tagline-badge">Ready to Start?</span>
               <h2 className="display-5 fw-bold text-white mb-3">
-                Upcoming batch
+                Upcoming RPA Batch August 2026
                 {/* connect to whats app group whatsapp RPA */}
               </h2>
               <p className="  fs-5 mb-4">
-                Join over 15,000+ developers accelerating their career with Autominds Academy today.
+                Join over developers accelerating their career with Autominds Academy today.
               </p>
               <div className="d-flex justify-content-center gap-3">
                 <Link to="/courses" className="btn-lime fs-5 px-5 py-3">
-                  Start Free Trial <i className="bi bi-arrow-right ms-2"></i>
+                  Enroll Now <i className="bi bi-arrow-right ms-2"></i>
                 </Link>
               </div>
             </div>
