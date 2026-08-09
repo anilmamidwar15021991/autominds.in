@@ -7,13 +7,13 @@ import workflowImg from '../assets/RPA-for-enterprises.webp';
 const coursesData = [
   {
     id: 1,
-    title: "Autonomous AI Agents Masterclass",
-    category: "Autonomous Agents",
-    duration: "6 Weeks",
+    title: "Agentic AI Engineering",
+    category: "Agentic AI Engineering",
+    duration: "12 Weeks",
     level: "Intermediate",
     rating: 4.9,
     reviews: 1240,
-    price: "$149",
+    price: "INR",
     image: profileAiImg,
     badge: "Bestseller",
     description: "Build self-correcting multi-agent teams using LangGraph, CrewAI, and custom tool integrations.",
@@ -22,16 +22,16 @@ const coursesData = [
   {
     id: 2,
     title: "RPA",
-    category: "Generative AI",
-    duration: "4 Weeks",
+    category: "RPA",
+    duration: "6 Weeks",
     level: "Advanced",
     rating: 4.8,
     reviews: 890,
-    price: "$129",
+    price: "INR",
     image: workflowImg,
     badge: "Hot Track",
-    description: "Master fine-tuning, RAG indexing, function calling, and deployment on cloud GPU clusters.",
-    curriculum: ["Vector Database Setup", "Hybrid Search RAG", "Model Fine-tuning", "Latency Optimization"]
+    description: "Master RPA tools like UiPath and Power Automate to automate business processes.",
+    curriculum: ["UiPath Studio & Automation Anywhere", "Power Automate & Process Mining", "Bot Architecture & Orchestration", "Enterprise Workflow Automation"]
   }
 ];
 
@@ -40,12 +40,12 @@ const Course = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCourseModal, setActiveCourseModal] = useState(null);
 
-  const categories = ['All', 'Autonomous Agents', 'Generative AI', 'Prompt Engineering'];
+  const categories = ['All', 'Agentic AI Engineering', 'RPA'];
 
   const filteredCourses = coursesData.filter(course => {
     const matchesCategory = selectedCategory === 'All' || course.category === selectedCategory;
-    const matchesSearch = course.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          course.description.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSearch = course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      course.description.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
@@ -69,10 +69,10 @@ const Course = () => {
                 <span className="input-group-text bg-black border-secondary   pe-0">
                   <i className="bi bi-search"></i>
                 </span>
-                <input 
-                  type="text" 
-                  className="form-control bg-black text-white border-secondary ps-2" 
-                  placeholder="Search courses by keyword..." 
+                <input
+                  type="text"
+                  className="form-control bg-black text-white border-secondary ps-2"
+                  placeholder="Search courses by keyword..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
@@ -86,11 +86,10 @@ const Course = () => {
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
-                className={`btn btn-sm rounded-pill px-3 py-2 fw-medium border-0 transition-all ${
-                  selectedCategory === cat 
-                    ? 'btn-lime' 
-                    : 'btn-glass'
-                }`}
+                className={`btn btn-sm rounded-pill px-3 py-2 fw-medium border-0 transition-all ${selectedCategory === cat
+                  ? 'btn-lime'
+                  : 'btn-glass'
+                  }`}
               >
                 {cat}
               </button>
@@ -122,15 +121,15 @@ const Course = () => {
                       <p className="  small flex-grow-1 mb-4">
                         {course.description}
                       </p>
-                      
+
                       <div className="d-flex align-items-center justify-content-between border-top border-secondary pt-3 mt-auto">
                         <div>
                           {/* <span className="fw-bold fs-4 text-white">{course.price}</span> */}
                           <span className="  extra-small d-block">{course.level}</span>
                         </div>
                         <div className="d-flex gap-2">
-                          <button 
-                            onClick={() => setActiveCourseModal(course)} 
+                          <button
+                            onClick={() => setActiveCourseModal(course)}
                             className="btn btn-sm btn-glass rounded-pill px-3"
                           >
                             Syllabus
@@ -160,9 +159,9 @@ const Course = () => {
 
       {/* SYLLABUS MODAL */}
       {activeCourseModal && (
-        <SyllabusModal 
-          course={activeCourseModal} 
-          onClose={() => setActiveCourseModal(null)} 
+        <SyllabusModal
+          course={activeCourseModal}
+          onClose={() => setActiveCourseModal(null)}
         />
       )}
     </div>
