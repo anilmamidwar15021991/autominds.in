@@ -18,7 +18,8 @@ const Footer = () => {
             <p className="  small pe-lg-4 mb-4">
               Empowering engineers and business innovators with real-world AI skills, autonomous workflow design, and hands-on LLM mastery.
             </p>
-            <div className="d-flex gap-3">
+            <div className="d-flex gap-3 mb-3">
+            
               <a href="#twitter" className="btn btn-sm btn-glass rounded-circle p-2 d-flex align-items-center justify-content-center" style={{ width: '38px', height: '38px' }}>
                 <i className="bi bi-twitter-x text-white"></i>
               </a>
@@ -39,7 +40,7 @@ const Footer = () => {
             <ul className="list-unstyled d-flex flex-column gap-2 small">
               <li><Link to="/" className="  text-decoration-none hover-white">Home</Link></li>
               <li><Link to="/about" className="  text-decoration-none hover-white">About Us</Link></li>
-              <li><Link to="/courses" className="  text-decoration-none hover-white">Course Catalog</Link></li>
+              <li><Link to="/agentic-ai" className="  text-decoration-none hover-white">Course Catalog</Link></li>
               <li><Link to="/blog" className="  text-decoration-none hover-white">AI Blog</Link></li>
               <li><Link to="/contact" className="  text-decoration-none hover-white">Contact Us</Link></li>
             </ul>

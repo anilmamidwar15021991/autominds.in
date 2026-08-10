@@ -60,11 +60,14 @@ const Contact = () => {
 
                   <div className="d-flex align-items-start gap-3">
                     <div className="p-3 bg-dark rounded-circle border border-secondary">
-                      <i className="bi bi-telephone-fill text-lime fs-5" style={{ color: '#d2fb52' }}></i>
+                      <i className="bi bi-whatsapp fs-5" style={{ color: '#25D366' }}></i>
                     </div>
                     <div>
-                      <span className="  small d-block">Phone / WhatsApp</span>
-                      <strong className="text-white fs-6">+91 8999442393</strong>
+                      <span className="small d-block text-white-50">Phone / WhatsApp</span>
+                      <a href="https://wa.me/918999442393" target="_blank" rel="noopener noreferrer" className="text-white text-decoration-none fw-bold fs-6 d-inline-flex align-items-center gap-2 hover-lime">
+                        +91 8999442393
+                        <i className="bi bi-box-arrow-up-right small text-lime"></i>
+                      </a>
                     </div>
                   </div>
                 </div>
