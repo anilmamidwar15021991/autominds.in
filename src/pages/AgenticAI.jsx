@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import SyllabusModal from '../components/SyllabusModal';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 import profileAiImg from '../assets/3cdcf1dfaf3e6fc0929d79351259da47.jpg';
 import heroBgImg from '../assets/d55f415d9e752ef2fa7edf6f07afac92.jpg';
@@ -25,26 +28,59 @@ const courseData = {
   ]
 };
 
-const modulesDetail = [
+const whyLearnData = [
   {
-    icon: "bi-diagram-3-fill",
-    title: "Multi-Agent Systems",
-    desc: "Architect autonomous agent swarms with specialized roles, state persistence, and conditional graph routing using LangGraph and CrewAI."
+    icon: "🤖",
+    title: "Build Autonomous AI Agents",
+    desc: "Create self-directed agents capable of executing multi-step task plans independently with minimal human oversight."
   },
   {
-    icon: "bi-tools",
-    title: "Tool Calling & Memory",
-    desc: "Equip your agents with custom API integrations, web searching, vector database retrieval, and long-term conversational memory."
+    icon: "🧠",
+    title: "Learn AI Reasoning & Planning",
+    desc: "Master ReAct prompting, chain-of-thought planning, tree-of-thoughts, and self-reflection loops for complex problem solving."
   },
   {
-    icon: "bi-arrow-repeat",
-    title: "Self-Reflection Loops",
-    desc: "Build self-correcting agents that evaluate their own output, handle execution failures gracefully, and incorporate human-in-the-loop oversight."
+    icon: "🔗",
+    title: "Connect APIs & External Tools",
+    desc: "Empower your agents to call custom REST APIs, run code interpreters, query SQL databases, and perform live web searches."
   },
   {
-    icon: "bi-cloud-arrow-up-fill",
-    title: "Production Deployment",
-    desc: "Deploy resilient, low-latency agent microservices to cloud infrastructure with complete execution tracing, telemetry, and observability."
+    icon: "📚",
+    title: "Build RAG-Based Agents",
+    desc: "Integrate vector databases and hybrid search retrieval pipelines for accurate context grounding and memory retention."
+  },
+  {
+    icon: "⚙️",
+    title: "Automate Business Workflows",
+    desc: "Transform tedious enterprise processes into scalable, multi-agent workflows that run reliably 24/7."
+  },
+  {
+    icon: "🚀",
+    title: "Develop Production-Ready AI Systems",
+    desc: "Deploy, monitor, trace, and evaluate production agent architectures built with LangGraph, CrewAI, and cloud services."
+  }
+];
+
+const whoShouldJoinData = [
+  {
+    icon: "🎓",
+    title: "Students & Freshers",
+    desc: "Start a career in Generative AI and Agentic AI."
+  },
+  {
+    icon: "👨‍💻",
+    title: "Developers",
+    desc: "Upgrade your development skills with AI-powered applications."
+  },
+  {
+    icon: "💼",
+    title: "Working Professionals",
+    desc: "Use AI agents to automate repetitive business workflows."
+  },
+  {
+    icon: "🚀",
+    title: "Entrepreneurs",
+    desc: "Build AI-powered products and intelligent automation solutions."
   }
 ];
 
@@ -56,6 +92,10 @@ const AgenticAI = () => {
   const heroSubRef = useRef(null);
   const heroCtaRef = useRef(null);
   const heroImageRef = useRef(null);
+  const whyLearnHeaderRef = useRef(null);
+  const whyLearnCardsRef = useRef(null);
+  const whoShouldJoinHeaderRef = useRef(null);
+  const whoShouldJoinCardsRef = useRef(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -100,10 +140,140 @@ const AgenticAI = () => {
           ease: 'power1.inOut'
         });
       }
+
+      // GSAP ScrollTrigger Animation for Why Learn Section Header
+      if (whyLearnHeaderRef.current) {
+        gsap.fromTo(
+          Array.from(whyLearnHeaderRef.current.children),
+          { y: 35, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            stagger: 0.15,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: whyLearnHeaderRef.current,
+              start: 'top 85%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+      }
+
+      // GSAP ScrollTrigger Animation for Why Learn Cards Grid
+      if (whyLearnCardsRef.current) {
+        const cards = Array.from(whyLearnCardsRef.current.children);
+        gsap.fromTo(
+          cards,
+          { y: 50, opacity: 0, scale: 0.92, rotateX: 10 },
+          {
+            y: 0,
+            opacity: 1,
+            scale: 1,
+            rotateX: 0,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: 'back.out(1.3)',
+            scrollTrigger: {
+              trigger: whyLearnCardsRef.current,
+              start: 'top 85%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+      }
+
+      // GSAP ScrollTrigger Animation for Who Should Join Section Header
+      if (whoShouldJoinHeaderRef.current) {
+        gsap.fromTo(
+          Array.from(whoShouldJoinHeaderRef.current.children),
+          { y: 35, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            stagger: 0.15,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: whoShouldJoinHeaderRef.current,
+              start: 'top 85%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+      }
+
+      // GSAP ScrollTrigger Animation for Who Should Join Cards Grid
+      if (whoShouldJoinCardsRef.current) {
+        const cards = Array.from(whoShouldJoinCardsRef.current.children);
+        gsap.fromTo(
+          cards,
+          { y: 50, opacity: 0, scale: 0.92, rotateX: 10 },
+          {
+            y: 0,
+            opacity: 1,
+            scale: 1,
+            rotateX: 0,
+            duration: 0.8,
+            stagger: 0.12,
+            ease: 'back.out(1.3)',
+            scrollTrigger: {
+              trigger: whoShouldJoinCardsRef.current,
+              start: 'top 85%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+      }
     });
 
     return () => ctx.revert();
   }, []);
+
+  const handleCardMouseEnter = (e) => {
+    const card = e.currentTarget;
+    const icon = card.querySelector('.icon-box');
+    gsap.to(card, {
+      y: -8,
+      scale: 1.02,
+      borderColor: 'rgba(210, 251, 82, 0.45)',
+      boxShadow: '0 20px 40px -15px rgba(0, 0, 0, 0.8), 0 0 25px rgba(210, 251, 82, 0.2)',
+      duration: 0.35,
+      ease: 'power2.out'
+    });
+    if (icon) {
+      gsap.to(icon, {
+        scale: 1.15,
+        rotate: 10,
+        backgroundColor: 'rgba(210, 251, 82, 0.25)',
+        duration: 0.35,
+        ease: 'back.out(1.7)'
+      });
+    }
+  };
+
+  const handleCardMouseLeave = (e) => {
+    const card = e.currentTarget;
+    const icon = card.querySelector('.icon-box');
+    gsap.to(card, {
+      y: 0,
+      scale: 1,
+      borderColor: 'rgba(255, 255, 255, 0.08)',
+      boxShadow: 'none',
+      duration: 0.35,
+      ease: 'power2.out'
+    });
+    if (icon) {
+      gsap.to(icon, {
+        scale: 1,
+        rotate: 0,
+        backgroundColor: 'rgba(0, 0, 0, 1)',
+        duration: 0.35,
+        ease: 'power2.out'
+      });
+    }
+  };
 
   return (
     <div className="agentic-ai-page overflow-hidden">
@@ -155,7 +325,7 @@ const AgenticAI = () => {
                   <i className="bi bi-journal-text"></i> View Full Syllabus
                 </button>
                 <a
-                  href="#curriculum"
+                  href="#whylearn"
                   className="btn btn-glass rounded-pill px-4 py-3 fw-medium d-inline-flex align-items-center gap-2 text-white"
                 >
                   Explore Highlights <i className="bi bi-arrow-down-short"></i>
@@ -173,12 +343,7 @@ const AgenticAI = () => {
                     className="w-100 h-auto object-fit-cover"
                     style={{ minHeight: '340px' }}
                   />
-                  <div className="position-absolute top-0 end-0 m-3">
-                    <span className="badge bg-dark border border-secondary text-warning px-3 py-2 rounded-pill shadow">
-                      <i className="bi bi-star-fill me-1"></i> {courseData.rating} ({courseData.reviews})
-                    </span>
-                  </div>
-                </div>               
+                </div>
               </div>
             </div>
           </div>
@@ -194,47 +359,91 @@ const AgenticAI = () => {
               <p className="text-white-50 small mb-0">Hands-on Engineering</p>
             </div>
             <div className="col-6 col-md-3">
-              <h3 className="fw-extrabold text-lime mb-1">Multi-Agent</h3>
-              <p className="text-white-50 small mb-0">LangGraph & CrewAI</p>
+              <h3 className="fw-extrabold text-lime mb-1">30</h3>
+              <p className="text-white-50 small mb-0">Modules</p>
             </div>
             <div className="col-6 col-md-3">
-              <h3 className="fw-extrabold text-white mb-1">4.9 / 5.0</h3>
-              <p className="text-white-50 small mb-0">Student Satisfaction</p>
+              <h3 className="fw-extrabold text-white mb-1">2 Massive</h3>
+              <p className="text-white-50 small mb-0">Capstone Projects</p>
             </div>
             <div className="col-6 col-md-3">
-              <h3 className="fw-extrabold text-lime mb-1">100% Live</h3>
-              <p className="text-white-50 small mb-0">Code & Deployment</p>
+              <h3 className="fw-extrabold text-lime mb-1">100%</h3>
+              <p className="text-white-50 small mb-0">Interview Ready</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* MAIN CURRICULUM HIGHLIGHTS */}
-      <section id="curriculum" className="py-5">
+      {/* WHY LEARN AGENTIC AI ENGINEERING SECTION */}
+      <section id="whylearn" className="py-5 bg-black border-top border-secondary position-relative">
         <div className="container py-4">
-          <div className="text-center max-w-3xl mx-auto mb-5">
+          <div className="text-center max-w-3xl mx-auto mb-5" ref={whyLearnHeaderRef}>
             <span className="hero-tagline-badge mb-3 d-inline-block">
-              <i className="bi bi-layers-fill me-1"></i> Core Curriculum
+              <i className="bi bi-stars me-1"></i> Industry Impact
             </span>
-            <h2 className="display-5 fw-bold text-white mb-3">What You Will Master</h2>
+            <h2 className="display-5 fw-bold text-white mb-3">Why Learn Agentic AI Engineering?</h2>
             <p className="fs-5 text-white-50">
-              A comprehensive, industry-aligned engineering roadmap to design, evaluate, and scale production-ready AI agents.
+              Agentic AI is shifting software development from prompt engineering to building fully autonomous, tool-using systems.
             </p>
           </div>
 
-          <div className="row g-4">
-            {modulesDetail.map((mod, idx) => (
-              <div key={idx} className="col-md-6 col-lg-3">
-                <div className="glass-feature-card h-100 p-4 rounded-4 border border-secondary bg-dark text-start d-flex flex-column justify-content-between">
+          <div className="row g-4" ref={whyLearnCardsRef}>
+            {whyLearnData.map((item, idx) => (
+              <div key={idx} className="col-md-6 col-lg-4">
+                <div
+                  className="glass-feature-card h-100 p-4 rounded-4 border border-secondary bg-dark text-start d-flex flex-column justify-content-between transition-all"
+                  onMouseEnter={handleCardMouseEnter}
+                  onMouseLeave={handleCardMouseLeave}
+                  style={{ cursor: 'pointer' }}
+                >
                   <div>
                     <div
-                      className="p-3 rounded-3 bg-black border border-secondary text-lime d-inline-flex align-items-center justify-content-center mb-3"
-                      style={{ width: '48px', height: '48px' }}
+                      className="icon-box p-3 rounded-3 bg-black border border-secondary text-lime d-inline-flex align-items-center justify-content-center mb-3 fs-3"
+                      style={{ width: '56px', height: '56px', transition: 'all 0.3s ease' }}
                     >
-                      <i className={`bi ${mod.icon} fs-4`}></i>
+                      <span>{item.icon}</span>
                     </div>
-                    <h5 className="text-white fw-bold mb-2">{mod.title}</h5>
-                    <p className="text-white-50 small mb-0">{mod.desc}</p>
+                    <h5 className="text-white fw-bold mb-2">{item.title}</h5>
+                    <p className="text-white-50 small mb-0">{item.desc}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* WHO SHOULD JOIN SECTION */}
+      <section className="py-5 bg-dark border-top border-secondary position-relative">
+        <div className="container py-4">
+          <div className="text-center max-w-3xl mx-auto mb-5" ref={whoShouldJoinHeaderRef}>
+            <span className="hero-tagline-badge mb-3 d-inline-block">
+              <i className="bi bi-people-fill me-1"></i> Target Audience
+            </span>
+            <h2 className="display-5 fw-bold text-white mb-3">Who Should Join?</h2>
+            <p className="fs-5 text-white-50">
+              Designed for forward-thinking individuals looking to master agentic AI systems and scale intelligent workflows.
+            </p>
+          </div>
+
+          <div className="row g-4" ref={whoShouldJoinCardsRef}>
+            {whoShouldJoinData.map((item, idx) => (
+              <div key={idx} className="col-md-6 col-lg-3">
+                <div
+                  className="glass-feature-card h-100 p-4 rounded-4 border border-secondary bg-dark text-start d-flex flex-column justify-content-between transition-all"
+                  onMouseEnter={handleCardMouseEnter}
+                  onMouseLeave={handleCardMouseLeave}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <div>
+                    <div
+                      className="icon-box p-3 rounded-3 bg-black border border-secondary text-lime d-inline-flex align-items-center justify-content-center mb-3 fs-3"
+                      style={{ width: '56px', height: '56px', transition: 'all 0.3s ease' }}
+                    >
+                      <span>{item.icon}</span>
+                    </div>
+                    <h5 className="text-white fw-bold mb-2">{item.title}</h5>
+                    <p className="text-white-50 small mb-0">{item.desc}</p>
                   </div>
                 </div>
               </div>
