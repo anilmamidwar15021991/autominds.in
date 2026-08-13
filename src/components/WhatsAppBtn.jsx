@@ -13,7 +13,7 @@ const WhatsAppBtn = () => {
       <div className="whatsapp-icon-wrapper d-flex align-items-center justify-content-center">
         <i className="bi bi-whatsapp"></i>
       </div>
-      {/* <span className="whatsapp-number-text fw-semibold d-none d-sm-inline"></span> */}
+    
     </a>
   );
 };
