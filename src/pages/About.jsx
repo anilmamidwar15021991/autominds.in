@@ -286,13 +286,6 @@ const About = () => {
               <p className="fs-6 text-light-muted mb-4 pe-lg-4 ps-lg-4" style={{ lineHeight: 1.7 }}>
                 Whether you're a student beginning your AI journey, a software developer looking to upskill, or a professional planning a career transition, Auto Minds Academy provides the knowledge, mentorship, and practical experience needed to become a confident AI Engineer.
               </p>
-
-              <div className="p-3 bg-dark-subtle rounded-pill d-inline-block border border-secondary mb-4 px-4">
-                <span className="fw-bold fs-6" style={{ color: '#d2fb52', letterSpacing: '0.05em' }}>
-                  Learn. Build. Innovate. Lead the Future with AI.
-                </span>
-              </div>
-
               <div>
                 <Link to="/courses" className="btn-lime fs-6 px-5 py-3 text-decoration-none">
                   Explore AI Courses <i className="bi bi-arrow-right ms-2"></i>

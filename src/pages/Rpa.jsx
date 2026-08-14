@@ -63,24 +63,72 @@ const whyLearnData = [
 
 const whoShouldJoinData = [
   {
-    icon: "🎓",
-    title: "Students & Freshers",
-    desc: "Kickstart a high-growth career in enterprise automation and software robotics with zero prior coding barriers."
-  },
-  {
-    icon: "👨‍💻",
-    title: "Developers & QA Testers",
-    desc: "Transition into high-demand RPA developer, test automation, and automation architect roles."
-  },
-  {
     icon: "💼",
-    title: "Operations & Business Analysts",
-    desc: "Automate manual Excel, invoice processing, payroll, and reporting workflows across finance, HR, and ops."
+    title: "Non-Tech & Business Users",
+    desc: "Professionals who want to automate manual spreadsheets, invoices, data entry, and reporting with low-code tools."
+  },
+  {
+    icon: "💻",
+    title: "Software & QA Engineers",
+    desc: "Developers and test automation engineers transitioning into high-demand enterprise RPA & hyperautomation roles."
+  },
+  {
+    icon: "🎓",
+    title: "Graduates & Job Seekers",
+    desc: "Build verifiable enterprise bot portfolios, gain hands-on UiPath expertise, and prepare for high-paying RPA jobs."
   },
   {
     icon: "🚀",
     title: "IT Pros & Consultants",
     desc: "Lead enterprise digital transformation, process mining, and intelligent process automation projects."
+  }
+];
+
+const rpaTracksData = [
+  {
+    level: "Beginner RPA",
+    badge: "Level 1 • Foundations",
+    duration: "Weeks 1–3",
+    subtitle: "Modules 1–3 • Core Fundamentals",
+    // description: "Start from zero. Master automation concepts, UiPath Studio setup, variables, sequences, flowcharts, and Excel data automation.",
+    topics: [
+      "Introduction to RPA & Low-Code Platforms",
+      "UiPath Studio Installation & Interface",
+      "Variables, Data Types & Control Flows",
+      "Excel Reading, Writing & Data Manipulation"
+    ],
+    accentColor: "#d2fb52",
+    featured: false
+  },
+  {
+    level: "Intermediate RPA",
+    badge: "Level 2 • Developer Track",
+    duration: "Weeks 4–7",
+    subtitle: "Modules 4–6 • Web, Email & Document AI",
+    // description: "Build robust bots for web browsers, dynamic form filling, email workflows, automated notifications, and PDF extraction.",
+    topics: [
+      "Browser Automation & Structured Data Extraction",
+      "Web Scraping, Form Filling & Login Workflows",
+      "Email Automation & Attachment Parsing",
+      "PDF Data Extraction, OCR & File System Flows"
+    ],
+    accentColor: "#00ab6b",
+    featured: true
+  },
+  {
+    level: "Advance RPA",
+    badge: "Level 3 • Enterprise Architect",
+    duration: "Weeks 8–10",
+    subtitle: "Modules 7–10 • REFramework & Real-Time Bots",
+    // description: "Develop enterprise-grade state machine bots with Robotic Enterprise Framework (REFramework), queues, debugging, and live capstone bots.",
+    topics: [
+      "REFramework Architecture & State Machines",
+      "Exception Handling, Logging & Queue Management",
+      "4 Real-Time Bots (Invoice, Report, Onboarding)",
+      "UiPath Associate Exam Prep & Mock Interviews"
+    ],
+    accentColor: "#38ef7d",
+    featured: false
   }
 ];
 
@@ -92,6 +140,8 @@ const Rpa = () => {
   const heroSubRef = useRef(null);
   const heroCtaRef = useRef(null);
   const heroImageRef = useRef(null);
+  const tracksHeaderRef = useRef(null);
+  const tracksCardsRef = useRef(null);
   const whyLearnHeaderRef = useRef(null);
   const whyLearnCardsRef = useRef(null);
   const whoShouldJoinHeaderRef = useRef(null);
@@ -139,6 +189,48 @@ const Rpa = () => {
           yoyo: true,
           ease: 'power1.inOut'
         });
+      }
+
+      // GSAP ScrollTrigger Animation for RPA Tracks Header
+      if (tracksHeaderRef.current) {
+        gsap.fromTo(
+          Array.from(tracksHeaderRef.current.children),
+          { y: 35, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            stagger: 0.15,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: tracksHeaderRef.current,
+              start: 'top 85%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+      }
+
+      // GSAP ScrollTrigger Animation for RPA Tracks Cards
+      if (tracksCardsRef.current) {
+        const cards = Array.from(tracksCardsRef.current.children);
+        gsap.fromTo(
+          cards,
+          { y: 50, opacity: 0, scale: 0.92 },
+          {
+            y: 0,
+            opacity: 1,
+            scale: 1,
+            duration: 0.8,
+            stagger: 0.15,
+            ease: 'back.out(1.3)',
+            scrollTrigger: {
+              trigger: tracksCardsRef.current,
+              start: 'top 85%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
       }
 
       // GSAP ScrollTrigger Animation for Why Learn Section Header
@@ -318,12 +410,12 @@ const Rpa = () => {
 
               {/* Action Buttons */}
               <div className="d-flex gap-3 align-items-center flex-wrap" ref={heroCtaRef}>
-                <button
+                {/* <button
                   onClick={() => setActiveCourseModal(courseData)}
                   className="btn btn-lime rounded-pill px-4 py-3 fw-bold d-inline-flex align-items-center gap-2 shadow-lg">
                   <i className="bi bi-journal-text"></i> View Full Syllabus
-                </button>
-                <a href="#whylearn"
+                </button> */}
+                <a href="#levels"
                   className="btn btn-glass rounded-pill px-4 py-3 fw-medium d-inline-flex align-items-center gap-2 text-white">
                   Explore Highlights <i className="bi bi-arrow-down-short"></i>
                 </a>
@@ -347,26 +439,90 @@ const Rpa = () => {
         </div>
       </section>
 
-      {/* STATS BANNER */}
-      <section className="py-4 bg-black border-top border-bottom border-secondary">
-        <div className="container">
-          <div className="row g-4 text-center">
-            <div className="col-6 col-md-3">
-              <h3 className="fw-extrabold text-white mb-1">10 Weeks</h3>
-              <p className="text-white-50 small mb-0">Hands-on Automation</p>
-            </div>
-            <div className="col-6 col-md-3">
-              <h3 className="fw-extrabold text-lime mb-1">24+</h3>
-              <p className="text-white-50 small mb-0">Practical Labs</p>
-            </div>
-            <div className="col-6 col-md-3">
-              <h3 className="fw-extrabold text-white mb-1">3 Massive</h3>
-              <p className="text-white-50 small mb-0">Enterprise Capstone Bots</p>
-            </div>
-            <div className="col-6 col-md-3">
-              <h3 className="fw-extrabold text-lime mb-1">100%</h3>
-              <p className="text-white-50 small mb-0">Job & Exam Ready</p>
-            </div>
+      {/* RPA LEVELS & LEARNING TRACKS (Beginner, Intermediate, Advance) */}
+      <section id="levels" className="py-5 bg-dark border-top border-secondary position-relative">
+        <div className="container py-4">
+          <div className="text-center max-w-3xl mx-auto mb-5" ref={tracksHeaderRef}>
+            <span className="hero-tagline-badge mb-3 d-inline-block">
+              <i className="bi bi-diagram-3-fill me-1"></i> Progressive Curriculum
+            </span>
+            <h2 className="display-5 fw-bold text-white mb-3">RPA Mastery by Experience Level</h2>
+            <p className="fs-5 text-white-50">
+              A structured 10-week roadmap taking you from core low-code automation to enterprise-scale state machines and REFramework bot deployment.
+            </p>
+          </div>
+
+          <div className="row g-4 justify-content-center" ref={tracksCardsRef}>
+            {rpaTracksData.map((track, idx) => (
+              <div key={idx} className="col-lg-4 col-md-6">
+                <div
+                  className={`glass-feature-card h-100 p-4 p-xl-5 rounded-4 border bg-black text-start d-flex flex-column justify-content-between transition-all position-relative ${track.featured ? 'border-lime shadow-lg' : 'border-secondary'
+                    }`}
+                  onMouseEnter={handleCardMouseEnter}
+                  onMouseLeave={handleCardMouseLeave}
+                  style={{ cursor: 'pointer' }}
+                >
+                  {track.featured && (
+                    <div className="position-absolute top-0 end-0 m-3">
+                      <span className="badge bg-lime text-black fw-bold px-3 py-1 rounded-pill small">
+                        Most Popular
+                      </span>
+                    </div>
+                  )}
+
+                  <div>
+                    {/* Level Badge & Duration */}
+                    <div className="d-flex justify-content-between align-items-center mb-3">
+                      <span
+                        className="badge bg-dark border text-uppercase tracking-wider fw-semibold px-3 py-2 rounded-pill small"
+                        style={{ borderColor: track.accentColor, color: track.accentColor }}
+                      >
+                        {track.badge}
+                      </span>
+                      <span className="text-white-50 small fw-medium">
+                        <i className="bi bi-clock me-1 text-lime"></i> {track.duration}
+                      </span>
+                    </div>
+
+                    {/* Track Title & Subtitle */}
+                    <h3 className="text-white fw-bold mb-1">{track.level}</h3>
+                    <p className="text-lime small fw-semibold mb-3">{track.subtitle}</p>
+
+                    {/* Description */}
+                    <p className="text-white-50 small mb-4" style={{ lineHeight: '1.6' }}>
+                      {track.description}
+                    </p>
+
+                    {/* Key Topics List */}
+                    <div className="mb-4 pb-2 border-top border-secondary border-opacity-25 pt-3">
+                      <h6 className="text-white fw-bold small text-uppercase mb-3 tracking-wider" style={{ fontSize: '0.78rem' }}>
+                        Key Skills & Modules
+                      </h6>
+                      <ul className="list-unstyled mb-0 d-flex flex-column gap-2">
+                        {track.topics.map((topic, tIdx) => (
+                          <li key={tIdx} className="small text-white-50 d-flex align-items-start gap-2">
+                            <i className="bi bi-check-circle-fill text-lime mt-1 flex-shrink-0" style={{ fontSize: '0.85rem' }}></i>
+                            <span>{topic}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  {/* View Full Syllabus CTA Button */}
+                  <div className="pt-3 border-top border-secondary border-opacity-25 mt-auto">
+                    <button
+                      type="button"
+                      onClick={() => setActiveCourseModal(courseData)}
+                      className={`btn w-100 rounded-pill py-3 fw-bold d-inline-flex align-items-center justify-content-center gap-2 shadow-sm transition-all ${track.featured ? 'btn-lime' : 'btn-lime'
+                        }`}
+                    >
+                      <i className="bi bi-journal-text"></i> View Full Syllabus
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -445,26 +601,6 @@ const Rpa = () => {
                 </div>
               </div>
             ))}
-          </div>
-
-          {/* SYLLABUS CTA BOX */}
-          <div className="mt-5 glass-panel p-4 p-md-5 rounded-4 text-center border border-secondary position-relative overflow-hidden">
-            <div className="row align-items-center g-4">
-              <div className="col-lg-8 text-lg-start">
-                <h3 className="fw-bold text-white mb-2">Ready to Build Enterprise RPA Bots?</h3>
-                <p className="text-white-50 mb-0">
-                  Explore full module breakdowns, week-by-week projects, tools, and prerequisites.
-                </p>
-              </div>
-              <div className="col-lg-4 text-lg-end">
-                <button
-                  onClick={() => setActiveCourseModal(courseData)}
-                  className="btn btn-lime rounded-pill px-4 py-3 fw-bold d-inline-flex align-items-center gap-2"
-                >
-                  <i className="bi bi-journal-text"></i> View Full Syllabus
-                </button>
-              </div>
-            </div>
           </div>
         </div>
       </section>
