@@ -64,7 +64,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <span className="small d-block text-white-50">Phone / WhatsApp</span>
-                      <a href="https://wa.me/918999442393" target="_blank" rel="noopener noreferrer" className="text-white text-decoration-none fw-bold fs-6 d-inline-flex align-items-center gap-2 hover-lime">
+                      <a href="https://wa.me/918999442393?text=Welcome%20to%20Auto%20Minds%20Academy" target="_blank" rel="noopener noreferrer" className="text-white text-decoration-none fw-bold fs-6 d-inline-flex align-items-center gap-2 hover-lime">
                         +91 8999442393
                         <i className="bi bi-box-arrow-up-right small text-lime"></i>
                       </a>
@@ -74,8 +74,8 @@ const Contact = () => {
 
                 <div className="pt-4 border-top border-secondary">
                   <h6 className="text-white fw-bold mb-3">Live Mentor Hours</h6>
-                  <p className="  small mb-0">Monday – Friday: 8:00 AM – 8:00 PM PST</p>
-                  <p className="  small mb-0">Saturday – Sunday: 10:00 AM – 4:00 PM PST</p>
+                  <p className="  small mb-0">Monday – Friday: 8:00 AM – 8:00 PM </p>
+                  <p className="  small mb-0">Saturday – Sunday: 10:00 AM – 6:00 PM </p>
                 </div>
               </div>
             </div>

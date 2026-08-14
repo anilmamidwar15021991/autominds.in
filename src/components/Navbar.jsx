@@ -157,7 +157,7 @@ const Navbar = () => {
                 <i className="bi bi-envelope me-2"></i> Contact us
               </NavLink>
               <a 
-                href="https://wa.me/918999442393" 
+                href="https://wa.me/918999442393?text=Welcome%20to%20Auto%20Minds%20Academy" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="btn-whatsapp-nav mt-2 justify-content-center d-flex align-items-center gap-2"

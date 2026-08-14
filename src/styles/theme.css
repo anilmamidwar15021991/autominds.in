@@ -789,3 +789,39 @@ h6,
   color: #d2fb52 !important;
   background: rgba(255, 255, 255, 0.05);
 }
+
+/* ==========================================================================
+   ENROLL MODAL & FORM STYLES
+   ========================================================================== */
+.enroll-modal-container {
+  max-width: 540px !important;
+  background: #0f131d !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 35px rgba(210, 251, 82, 0.12) !important;
+}
+
+.enroll-modal-container .form-control,
+.enroll-modal-container .form-select {
+  background-color: #141824 !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  color: #ffffff !important;
+  font-size: 0.95rem;
+  padding: 0.65rem 0.9rem;
+}
+
+.enroll-modal-container .form-control:focus,
+.enroll-modal-container .form-select:focus {
+  border-color: var(--accent-lime) !important;
+  box-shadow: 0 0 0 3px rgba(210, 251, 82, 0.2) !important;
+}
+
+.enroll-modal-container .input-group-text {
+  background-color: #0c0f17 !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.enroll-modal-container select option {
+  background-color: #141824 !important;
+  color: #ffffff !important;
+}

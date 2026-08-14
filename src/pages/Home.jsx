@@ -11,9 +11,11 @@ import workflowImg from '../assets/27e5401d70d844af82e09bcf99943593.jpg';
 import profileAiImg from '../assets/3cdcf1dfaf3e6fc0929d79351259da47.jpg';
 import networkAiImg from '../assets/3b584eaf8444c8ade13d5ff7745a40cc.jpg';
 import TechStackSection from '../components/TechStackSection';
+import EnrollModal from '../components/EnrollModal';
 
 const Home = () => {
   const [activeTab, setActiveTab] = useState('weekly');
+  const [isEnrollModalOpen, setIsEnrollModalOpen] = useState(false);
 
   const heroBadgeRef = useRef(null);
   const heroHeadingRef = useRef(null);
@@ -316,6 +318,50 @@ const Home = () => {
         </div>
       </section>
 
+      {/* CALL TO ACTION */}
+      <section className="my-3">
+        <div className="container">
+          <div className="glass-panel p-5 text-center position-relative overflow-hidden">
+            <div className="position-relative z-1 max-w-2xl mx-auto py-4">
+              <span className="hero-tagline-badge mb-3 d-inline-block">Ready to Start?</span>
+              <h2 className="display-6 fw-bold text-white mb-3">
+                Upcoming Batch Agentic AI Engineering
+              </h2>
+
+              {/* Batch Info Cards */}
+              <div className="d-flex flex-wrap justify-content-center gap-3 my-4">
+                <div className="d-flex align-items-center gap-2 px-3 py-2 rounded-pill bg-dark border border-secondary text-white small">
+                  <i className="bi bi-mortarboard-fill text-lime"></i>
+                  <span><strong className="text-white-50">Course:</strong> Agentic AI Engineering</span>
+                </div>
+                <div className="d-flex align-items-center gap-2 px-3 py-2 rounded-pill bg-dark border border-secondary text-white small">
+                  <i className="bi bi-calendar-event-fill text-lime"></i>
+                  <span><strong className="text-white-50">Date:</strong> 16 August 2026</span>
+                </div>
+                <div className="d-flex align-items-center gap-2 px-3 py-2 rounded-pill bg-dark border border-secondary text-white small">
+                  <i className="bi bi-clock-fill text-lime"></i>
+                  <span><strong className="text-white-50">Timing:</strong> 10:00 AM – 11:00 AM</span>
+                </div>
+              </div>
+
+              <p className="fs-5 mb-4 text-white-50">
+                Join our courses to build in-demand skills and accelerate your career with Autominds Academy today.
+              </p>
+              <div className="d-flex justify-content-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => setIsEnrollModalOpen(true)}
+                  className="btn-lime fs-5 px-5 py-3 border-0 rounded-pill fw-semibold shadow-lg"
+                >
+                  Enroll Now <i className="bi bi-arrow-right ms-2"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
       {/* WHY CHOOSE US SECTION */}
       <section className="py-5 my-4 position-relative">
         <div className="container">
@@ -335,7 +381,7 @@ const Home = () => {
           <div className="row g-4" ref={whyCardsGridRef}>
             {/* 1. Industry Curriculum */}
             <div className="col-12 col-md-6 col-lg-4">
-              <div 
+              <div
                 className="glass-feature-card"
                 onMouseEnter={handleWhyCardMouseEnter}
                 onMouseLeave={handleWhyCardMouseLeave}
@@ -350,7 +396,7 @@ const Home = () => {
 
             {/* 2. Live Coding */}
             <div className="col-12 col-md-6 col-lg-4">
-              <div 
+              <div
                 className="glass-feature-card"
                 onMouseEnter={handleWhyCardMouseEnter}
                 onMouseLeave={handleWhyCardMouseLeave}
@@ -365,7 +411,7 @@ const Home = () => {
 
             {/* 3. Real Projects */}
             <div className="col-12 col-md-6 col-lg-4">
-              <div 
+              <div
                 className="glass-feature-card"
                 onMouseEnter={handleWhyCardMouseEnter}
                 onMouseLeave={handleWhyCardMouseLeave}
@@ -380,7 +426,7 @@ const Home = () => {
 
             {/* 4. Certificate */}
             <div className="col-12 col-md-6 col-lg-4">
-              <div 
+              <div
                 className="glass-feature-card"
                 onMouseEnter={handleWhyCardMouseEnter}
                 onMouseLeave={handleWhyCardMouseLeave}
@@ -395,7 +441,7 @@ const Home = () => {
 
             {/* 5. Placement */}
             <div className="col-12 col-md-6 col-lg-4">
-              <div 
+              <div
                 className="glass-feature-card"
                 onMouseEnter={handleWhyCardMouseEnter}
                 onMouseLeave={handleWhyCardMouseLeave}
@@ -410,7 +456,7 @@ const Home = () => {
 
             {/* 6. Mentorship */}
             <div className="col-12 col-md-6 col-lg-4">
-              <div 
+              <div
                 className="glass-feature-card"
                 onMouseEnter={handleWhyCardMouseEnter}
                 onMouseLeave={handleWhyCardMouseLeave}
@@ -609,31 +655,20 @@ const Home = () => {
         </div>
       </section>
 
-      {/* CALL TO ACTION */}
-      <section className="py-5 my-5">
-        <div className="container">
-          <div className="glass-panel p-5 text-center position-relative overflow-hidden">
-            <div className="position-relative z-1 max-w-2xl mx-auto py-4">
-              <span className="hero-tagline-badge">Ready to Start?</span>
-              <h2 className="display-5 fw-bold text-white mb-3">
-                Upcoming RPA Batch August 2026
-                {/* connect to whats app group whatsapp RPA */}
-              </h2>
-              <p className="  fs-5 mb-4">
-                Join over developers accelerating their career with Autominds Academy today.
-              </p>
-              <div className="d-flex justify-content-center gap-3">
-                <Link to="/courses" className="btn-lime fs-5 px-5 py-3">
-                  Enroll Now <i className="bi bi-arrow-right ms-2"></i>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Tool technology you will master */}
       <TechStackSection />
+
+      {/* Enrollment Modal */}
+      <EnrollModal
+        isOpen={isEnrollModalOpen}
+        onClose={() => setIsEnrollModalOpen(false)}
+        batchDetails={{
+          courseName: 'Agentic AI Engineering',
+          date: '16 August 2026',
+          timing: '10:00 AM to 11:00 AM'
+        }}
+      />
     </div>
   );
 };
