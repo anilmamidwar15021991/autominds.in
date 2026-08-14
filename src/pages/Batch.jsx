@@ -9,31 +9,21 @@ import heroBg from '../assets/d55f415d9e752ef2fa7edf6f07afac92.jpg';
 import profileAiImg from '../assets/3cdcf1dfaf3e6fc0929d79351259da47.jpg';
 import anilImg from '../assets/Mentors/Anilmamidwar.png';
 import adityaImg from '../assets/Mentors/aditya.png';
+import rajeshImg from '../assets/Mentors/Rajesh_kumar.webp';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const batchSlots = [
   
   {
-    id: 2,
+    id: 1,
     batchTitle: "Weekday Evening",
-    startDate: "25 August 2026",
+    startDate: "16 August 2026",
     schedule: "Monday & Saturday",
-    timing: "07:30 PM – 09:00 PM IST",
+    timing: "07:30 PM – 09:00 PM",
     mode: "Live Interactive (Zoom/Meet)",
     duration: "10 Weeks (40+ Hours)",
     statusBadge: "Enrolling Now",
-    featured: false
-  },
-  {
-    id: 3,
-    batchTitle: "Executive Weekend Advanced",
-    startDate: "05 September 2026",
-    schedule: "Saturday & Sunday",
-    timing: "04:00 PM – 05:30 PM IST",
-    mode: "Live Interactive (Zoom/Meet)",
-    duration: "12 Weeks (48+ Hours)",
-    statusBadge: "Upcoming",
     featured: false
   }
 ];
@@ -182,9 +172,9 @@ const Batch = () => {
                 <div className="badge-pill-custom">
                   <i className="bi bi-broadcast text-lime"></i> Mode: <strong>100% Live Online</strong>
                 </div>
-                <div className="badge-pill-custom">
+                {/* <div className="badge-pill-custom">
                   <i className="bi bi-award text-lime"></i> Certification: <strong>Included</strong>
-                </div>
+                </div> */}
               </div>
 
               {/* CTA Action Buttons */}
@@ -211,11 +201,7 @@ const Batch = () => {
             {/* Right Card / Visual */}
             <div className="col-lg-5">
               <div className="glass-panel p-4 p-md-4 rounded-4 border border-secondary shadow-lg position-relative">
-                <div className="position-absolute top-0 end-0 m-3">
-                  <span className="badge bg-lime text-black fw-bold px-3 py-2 rounded-pill">
-                    ⚡ Live Cohort
-                  </span>
-                </div>
+                
 
                 <div className="d-flex align-items-center gap-3 mb-4">
                   <img
@@ -227,7 +213,7 @@ const Batch = () => {
                   <div>
                     <span className="text-lime fw-bold small text-uppercase tracking-wider">Autominds Flagship</span>
                     <h4 className="text-white fw-bold mb-1">Agentic AI Track</h4>
-                    <p className="text-white-50 small mb-0">12 Weeks • 4 Capstones • Live Mentorship</p>
+                    <p className="text-white-50 small mb-0">12 Weeks • Live Mentorship</p>
                   </div>
                 </div>
 
@@ -325,20 +311,6 @@ const Batch = () => {
                     </div>
                   </div>
 
-                  {/* Seat Progress Bar */}
-                  <div className="mb-4">
-                    <div className="d-flex justify-content-between small mb-1">
-                      <span className="text-white-50">Seats Filling Fast</span>
-                     
-                    </div>
-                    <div className="progress bg-dark" style={{ height: '6px' }}>
-                      <div 
-                        className="progress-bar bg-lime" 
-                        style={{ width: `${((slot.seatsTotal - slot.seatsLeft) / slot.seatsTotal) * 100}%` }}
-                      ></div>
-                    </div>
-                  </div>
-
                   <div className="mt-auto">
                     <button
                       type="button"
@@ -395,7 +367,7 @@ const Batch = () => {
       <section className="py-5 border-top border-secondary bg-black">
         <div className="container">
           <div className="text-center mx-auto mb-5" style={{ maxWidth: '650px' }}>
-            <span className="hero-tagline-badge mb-2">World-Class Mentors</span>
+            <span className="hero-tagline-badge mb-2">Our Mentors</span>
             <h2 className="display-6 fw-bold text-white mb-2">Learn from AI Architects</h2>
             <p className="text-white-50">
               Get trained, reviewed, and mentored by active AI practitioners working on generative models and enterprise agent workflows.
@@ -422,13 +394,14 @@ const Batch = () => {
             <div className="col-md-6 col-lg-5">
               <div className="glass-panel p-4 rounded-4 text-center border border-secondary h-100">
                 <img
-                  src={adityaImg}
-                  alt="Aditya"
+                  src={rajeshImg}
+                  alt="Rajesh Kumar"
                   className="rounded-circle mb-3 shadow-lg border border-lime p-1"
                   style={{ width: '110px', height: '110px', objectFit: 'cover' }}
                 />
-                <h4 className="text-white fw-bold mb-1">Aditya</h4>
-                <p className="text-lime small fw-semibold mb-3">Lead Agentic AI Engineer</p>
+                <h4 className="text-white fw-bold mb-1">Rajesh Kumar</h4>
+                <h4 className="text-white small mb-1">Guest Mentor</h4>
+                <p className="text-lime small fw-semibold mb-3">25+ years of Experience | IIM Alumini</p>
                 <p className="text-white-50 small mb-0" style={{ lineHeight: '1.6' }}>
                   Specializes in LangGraph, autonomous agents, tool orchestration, and high-concurrency LLM inference deployment.
                 </p>

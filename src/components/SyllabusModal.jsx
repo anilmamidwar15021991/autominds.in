@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-const syllabusData = [
+const agenticSyllabusData = [
   {
     id: 1,
     moduleNumber: "01",
@@ -310,38 +310,205 @@ const syllabusData = [
   }
 ];
 
-const SyllabusModal = ({ course, onClose }) => {
+const rpaSyllabusData = [
+  {
+    id: 1,
+    moduleNumber: "01",
+    tag: "MODULE 01",
+    duration: "Foundations",
+    title: "Module 1 — Introduction to RPA",
+    goal: "Goal: Understand core concepts of enterprise automation and RPA market landscape.",
+    topics: [
+      "What is Automation?",
+      "What is RPA?",
+      "RPA Market Overview",
+      "Career Opportunities in RPA",
+      "Understanding Low-Code / No-Code Platforms"
+    ]
+  },
+  {
+    id: 2,
+    moduleNumber: "02",
+    tag: "MODULE 02",
+    duration: "UiPath Studio",
+    title: "Module 2 — UiPath Fundamentals",
+    goal: "Goal: Master UiPath Studio setup, workflow design, and core activities.",
+    topics: [
+      "Installing UiPath Studio",
+      "Understanding UiPath Interface",
+      "Variables & Data Types",
+      "Sequences & Flowcharts",
+      "Input & Output Activities"
+    ]
+  },
+  {
+    id: 3,
+    moduleNumber: "03",
+    tag: "MODULE 03",
+    duration: "Excel & Data",
+    title: "Module 3 — Excel Automation",
+    goal: "Goal: Automate spreadsheets, data extraction, calculations, and reporting.",
+    topics: [
+      "Reading & Writing Excel Files",
+      "Data Manipulation",
+      "Filtering & Formatting",
+      "Excel-Based Automation Projects"
+    ]
+  },
+  {
+    id: 4,
+    moduleNumber: "04",
+    tag: "MODULE 04",
+    duration: "Browser & Scraping",
+    title: "Module 4 — Web Automation",
+    goal: "Goal: Automate web browsers, forms, logins, and structured scraping.",
+    topics: [
+      "Browser Automation",
+      "Form Filling Automation",
+      "Login Automation",
+      "Data Extraction",
+      "Web Scraping"
+    ]
+  },
+  {
+    id: 5,
+    moduleNumber: "05",
+    tag: "MODULE 05",
+    duration: "Email Flows",
+    title: "Module 5 — Email Automation",
+    goal: "Goal: Build automated email sending, inbox parsing, and attachment processing.",
+    topics: [
+      "Sending Emails",
+      "Reading Emails",
+      "Attachment Handling",
+      "Automated Notifications"
+    ]
+  },
+  {
+    id: 6,
+    moduleNumber: "06",
+    tag: "MODULE 06",
+    duration: "PDF & OCR",
+    title: "Module 6 — PDF & File Automation",
+    goal: "Goal: Extract data from PDFs, scanned documents, and organize file systems.",
+    topics: [
+      "PDF Data Extraction",
+      "File Handling",
+      "Folder Automation",
+      "File Renaming & Organization"
+    ]
+  },
+  {
+    id: 7,
+    moduleNumber: "07",
+    tag: "MODULE 07",
+    duration: "REFramework",
+    title: "Module 7 — Advanced UiPath Concepts",
+    goal: "Goal: Implement enterprise error handling, debugging, queues, and REFramework.",
+    topics: [
+      "Exception Handling",
+      "Debugging",
+      "Logging",
+      "Queue Management",
+      "REFramework Basics"
+    ]
+  },
+  {
+    id: 8,
+    moduleNumber: "08",
+    tag: "MODULE 08",
+    duration: "Real-Time Bots",
+    title: "Module 8 — Real-Time Projects",
+    goal: "Goal: Build end-to-end industry bots for real-world enterprise operations.",
+    topics: [
+      "Invoice Automation",
+      "Report Generation Bot",
+      "Employee Onboarding Automation",
+      "Email Processing Bot"
+    ]
+  },
+  {
+    id: 9,
+    moduleNumber: "09",
+    tag: "MODULE 09",
+    duration: "Career Launch",
+    title: "Module 9 — Career Preparation",
+    goal: "Goal: Optimize resume, profiles, and ace technical & HR interviews.",
+    topics: [
+      "Resume Building",
+      "LinkedIn Optimization",
+      "Naukri Profile Setup",
+      "Mock Interviews",
+      "Technical Interview Preparation"
+    ]
+  },
+  {
+    id: 10,
+    moduleNumber: "10",
+    tag: "MODULE 10",
+    duration: "Certification",
+    title: "Module 10 — Certification Preparation",
+    goal: "Goal: Complete practice tests and obtain official UiPath Associate certification.",
+    topics: [
+      "UiPath Associate Exam Guidance",
+      "Mock Tests",
+      "Important Questions",
+      "Certification Preparation Support"
+    ]
+  }
+];
+
+const SyllabusModal = ({ course, isOpen, onClose }) => {
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
         onClose();
       }
     };
-    document.body.style.overflow = 'hidden';
-    window.addEventListener('keydown', handleKeyDown);
+    if (course || isOpen) {
+      document.body.style.overflow = 'hidden';
+      window.addEventListener('keydown', handleKeyDown);
+    }
     return () => {
       document.body.style.overflow = 'unset';
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [onClose]);
+  }, [course, isOpen, onClose]);
 
-  if (!course) return null;
+  if (!course && !isOpen) return null;
+
+  const isRpa = Boolean(
+    course?.category?.toLowerCase().includes('rpa') ||
+    course?.title?.toLowerCase().includes('rpa') ||
+    course?.id === 2
+  );
+
+  const activeSyllabus = isRpa ? rpaSyllabusData : agenticSyllabusData;
+  const courseDetails = course || {
+    title: isRpa ? "Master Robotic Process Automation (RPA)" : "Master Agentic AI Engineering",
+    category: isRpa ? "Robotic Process Automation" : "Agentic AI Engineering",
+    description: isRpa
+      ? "Master enterprise RPA tools like UiPath, Power Automate, and AI Document Understanding to build end-to-end software bots that automate complex business processes."
+      : "Build intelligent AI agents that can reason, use tools, access knowledge, make decisions, and automate real-world workflows."
+  };
+
+  const totalTopics = activeSyllabus.reduce((acc, curr) => acc + curr.topics.length, 0);
 
   return (
     <div className="syllabus-modal-overlay" onClick={onClose}>
       <div className="syllabus-modal-container" onClick={(e) => e.stopPropagation()}>
         
-        {/* HEADER SECTION (Matching Image 1) */}
+        {/* HEADER SECTION */}
         <div className="syllabus-modal-header d-flex justify-content-between align-items-start">
           <div className="pe-4">
             <span className="hero-tagline-badge py-1 px-3 mb-2 d-inline-block">
-              {course.category || 'Autonomous Agents'}
+              {courseDetails.category || (isRpa ? 'Robotic Process Automation' : 'Agentic AI Engineering')}
             </span>
             <h3 className="modal-title fw-bold text-white mb-2" style={{ fontSize: '1.65rem' }}>
-              {course.title || 'Autonomous AI Agents Masterclass'}
+              {courseDetails.title}
             </h3>
             <p className="text-light-muted mb-0 small" style={{ maxWidth: '680px', lineHeight: '1.5' }}>
-              {course.description || 'Build self-correcting multi-agent teams using LangGraph, CrewAI, and custom tool integrations.'}
+              {courseDetails.description}
             </p>
           </div>
           <button 
@@ -352,15 +519,15 @@ const SyllabusModal = ({ course, onClose }) => {
           ></button>
         </div>
 
-        {/* BODY SECTION (Timeline Layout Matching Image 2) */}
+        {/* BODY SECTION (Timeline Layout) */}
         <div className="syllabus-modal-body">
           <div className="d-flex align-items-center justify-content-between mb-4 pb-2 border-bottom border-secondary border-opacity-25">
             <h5 className="fw-bold text-white mb-0 font-heading">
               <i className="bi bi-journal-code me-2" style={{ color: '#00ab6b' }}></i>
-              Curriculum Modules <span className="fs-6 ms-2" style={{ color: '#00ab6b' }}>(16 Modules)</span>
+              Curriculum Modules <span className="fs-6 ms-2" style={{ color: '#00ab6b' }}>({activeSyllabus.length} Modules)</span>
             </h5>
             <span className="badge bg-dark border border-secondary text-light-muted rounded-pill px-3 py-2 small">
-              150+ Topics Covered
+              {totalTopics}+ Topics Covered
             </span>
           </div>
 
@@ -368,13 +535,13 @@ const SyllabusModal = ({ course, onClose }) => {
             {/* Green Continuous Timeline Line */}
             <div className="syllabus-timeline-line"></div>
 
-            {/* List of 16 Modules */}
-            {syllabusData.map((module) => (
+            {/* List of Modules */}
+            {activeSyllabus.map((module) => (
               <div key={module.id} className="syllabus-card-item">
                 {/* Node Circle on Timeline */}
                 <div className="syllabus-timeline-node"></div>
 
-                {/* Module Card (Matching Image 2 Design) */}
+                {/* Module Card */}
                 <div className="syllabus-module-card">
                   {/* Top Header Row */}
                   <div className="d-flex justify-content-between align-items-center mb-2">
@@ -402,7 +569,7 @@ const SyllabusModal = ({ course, onClose }) => {
                     ))}
                   </div>
 
-                  {/* Big Watermark Number at Bottom Right (Matching Image 2 '01', '02'...) */}
+                  {/* Big Watermark Number at Bottom Right */}
                   <div className="syllabus-card-watermark">
                     {module.moduleNumber}
                   </div>
@@ -415,7 +582,7 @@ const SyllabusModal = ({ course, onClose }) => {
         {/* FOOTER SECTION */}
         <div className="syllabus-modal-footer p-3 px-4 border-top border-secondary border-opacity-25 d-flex justify-content-between align-items-center bg-dark bg-opacity-50">
           <span className="text-light-muted small d-none d-sm-inline">
-            <i className="bi bi-check2-circle me-1" style={{ color: '#00ab6b' }}></i> Full Hands-on AI Curriculum
+            <i className="bi bi-check2-circle me-1" style={{ color: '#00ab6b' }}></i> Full Hands-on {isRpa ? 'RPA' : 'AI'} Curriculum
           </span>
           <button 
             type="button" 
@@ -432,3 +599,4 @@ const SyllabusModal = ({ course, onClose }) => {
 };
 
 export default SyllabusModal;
+

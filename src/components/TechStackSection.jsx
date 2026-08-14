@@ -1,5 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const techTools = [
   // Row 1
@@ -331,19 +335,152 @@ const categories = ['All', 'AI & LLMs', 'Vector DBs', 'Data & Math', 'DevOps & C
 
 const TechStackSection = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const sectionRef = useRef(null);
+  const leftColRef = useRef(null);
+  const rightCardRef = useRef(null);
+  const gridRef = useRef(null);
 
   const filteredTools = selectedCategory === 'All'
     ? techTools
     : techTools.filter(t => t.category === selectedCategory);
 
+  // Entrance animations on ScrollTrigger
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // 1. Left column elements entrance
+      if (leftColRef.current) {
+        gsap.fromTo(
+          Array.from(leftColRef.current.children),
+          { y: 35, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            stagger: 0.12,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top 80%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+      }
+
+      // 2. Right card 3D entrance
+      if (rightCardRef.current) {
+        gsap.fromTo(
+          rightCardRef.current,
+          { x: 50, opacity: 0, scale: 0.94, rotateY: -8 },
+          {
+            x: 0,
+            opacity: 1,
+            scale: 1,
+            rotateY: 0,
+            duration: 1,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top 80%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+      }
+
+      // 3. Tech tiles initial pop-in
+      if (gridRef.current) {
+        const tiles = Array.from(gridRef.current.children);
+        gsap.fromTo(
+          tiles,
+          { scale: 0.7, opacity: 0, y: 15 },
+          {
+            scale: 1,
+            opacity: 1,
+            y: 0,
+            duration: 0.5,
+            stagger: { amount: 0.5, from: 'start' },
+            ease: 'back.out(1.6)',
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top 75%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+      }
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  // Category filter switch animation
+  useEffect(() => {
+    if (gridRef.current) {
+      const tiles = Array.from(gridRef.current.children);
+      gsap.fromTo(
+        tiles,
+        { scale: 0.85, opacity: 0, y: 12 },
+        {
+          scale: 1,
+          opacity: 1,
+          y: 0,
+          duration: 0.4,
+          stagger: 0.02,
+          ease: 'power2.out'
+        }
+      );
+    }
+  }, [selectedCategory]);
+
+  const handleTileMouseEnter = (e) => {
+    const tile = e.currentTarget;
+    const icon = tile.querySelector('.icon-wrapper');
+    gsap.to(tile, {
+      y: -5,
+      scale: 1.06,
+      boxShadow: '0 12px 24px rgba(0, 0, 0, 0.12)',
+      duration: 0.25,
+      ease: 'power2.out'
+    });
+    if (icon) {
+      gsap.to(icon, {
+        scale: 1.15,
+        rotate: 6,
+        duration: 0.25,
+        ease: 'back.out(1.7)'
+      });
+    }
+  };
+
+  const handleTileMouseLeave = (e) => {
+    const tile = e.currentTarget;
+    const icon = tile.querySelector('.icon-wrapper');
+    gsap.to(tile, {
+      y: 0,
+      scale: 1,
+      boxShadow: 'none',
+      duration: 0.25,
+      ease: 'power2.out'
+    });
+    if (icon) {
+      gsap.to(icon, {
+        scale: 1,
+        rotate: 0,
+        duration: 0.25,
+        ease: 'power2.out'
+      });
+    }
+  };
+
   return (
-    <section className="py-5 my-4 position-relative tech-stack-section">
+    <section className="py-5 my-4 position-relative tech-stack-section" ref={sectionRef}>
       <div className="container">
         <div className="row align-items-center g-4 g-xl-5">
 
-          {/* Left Column: Heading & Description (Matching Image 2 Layout) */}
+          {/* Left Column: Heading & Description */}
           <div className="col-lg-5 text-start">
-            <div className="pe-lg-3">
+            <div className="pe-lg-3" ref={leftColRef}>
               {/* Badge Pill */}
               <div className="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill bg-lime-subtle border border-lime-subtle mb-3">
                 <span className="text-lime fw-bold fs-7">✦ OUR TECH STACK</span>
@@ -387,9 +524,12 @@ const TechStackSection = () => {
             </div>
           </div>
 
-          {/* Right Column: Elevated Soft White Card Grid (Matching Image 2 Design) */}
+          {/* Right Column: Elevated Soft White Card Grid */}
           <div className="col-lg-7">
-            <div className="tech-stack-card p-3 p-sm-4 p-md-4 rounded-5 shadow-2xl position-relative bg-white text-dark">
+            <div 
+              ref={rightCardRef}
+              className="tech-stack-card p-3 p-sm-4 p-md-4 rounded-5 shadow-2xl position-relative bg-white text-dark"
+            >
 
               {/* Header info bar inside card */}
               <div className="d-flex align-items-center justify-content-between mb-3 px-2 pb-2 border-bottom border-light-subtle">
@@ -401,12 +541,15 @@ const TechStackSection = () => {
               </div>
 
               {/* Tools Tile Grid */}
-              <div className="tech-tools-grid">
+              <div className="tech-tools-grid" ref={gridRef}>
                 {filteredTools.map((tool, idx) => (
                   <div
                     key={tool.name + idx}
-                    className="tech-tile-item d-flex flex-column align-items-center justify-content-center text-center p-2 rounded-4 bg-white hover-elevate transition-all"
+                    className="tech-tile-item d-flex flex-column align-items-center justify-content-center text-center p-2 rounded-4 bg-white transition-all"
                     title={`${tool.name} - ${tool.category}`}
+                    onMouseEnter={handleTileMouseEnter}
+                    onMouseLeave={handleTileMouseLeave}
+                    style={{ cursor: 'pointer' }}
                   >
                     {/* Icon or Acronym Badge */}
                     <div className="icon-wrapper d-flex align-items-center justify-content-center mb-1">

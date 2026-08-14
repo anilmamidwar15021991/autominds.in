@@ -320,14 +320,11 @@ const Rpa = () => {
               <div className="d-flex gap-3 align-items-center flex-wrap" ref={heroCtaRef}>
                 <button
                   onClick={() => setActiveCourseModal(courseData)}
-                  className="btn btn-lime rounded-pill px-4 py-3 fw-bold d-inline-flex align-items-center gap-2 shadow-lg"
-                >
+                  className="btn btn-lime rounded-pill px-4 py-3 fw-bold d-inline-flex align-items-center gap-2 shadow-lg">
                   <i className="bi bi-journal-text"></i> View Full Syllabus
                 </button>
-                <a
-                  href="#whylearn"
-                  className="btn btn-glass rounded-pill px-4 py-3 fw-medium d-inline-flex align-items-center gap-2 text-white"
-                >
+                <a href="#whylearn"
+                  className="btn btn-glass rounded-pill px-4 py-3 fw-medium d-inline-flex align-items-center gap-2 text-white">
                   Explore Highlights <i className="bi bi-arrow-down-short"></i>
                 </a>
               </div>
