@@ -7,6 +7,7 @@ const EnrollModal = ({ isOpen, onClose, batchDetails = {} }) => {
     name: '',
     phone: '',
     email: '',
+    city: '',
     experiencelevel: ''
   };
 
@@ -43,11 +44,32 @@ const EnrollModal = ({ isOpen, onClose, batchDetails = {} }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if (name === 'phone') {
+      // Allow only numbers and restrict to max 10 digits
+      const digitsOnly = value.replace(/\D/g, '').slice(0, 10);
+      setFormData((prev) => ({ ...prev, [name]: digitsOnly }));
+      if (digitsOnly.length === 10 && errorMessage.includes('10')) {
+        setErrorMessage('');
+      }
+      return;
+    }
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const cleanPhone = formData.phone.trim().replace(/\D/g, '');
+
+    if (cleanPhone.length < 10) {
+      setErrorMessage('Phone number must be exactly 10 digits (less than 10 entered).');
+      return;
+    }
+
+    if (cleanPhone.length > 10) {
+      setErrorMessage('Phone number must be exactly 10 digits (more than 10 entered).');
+      return;
+    }
+
     setIsSubmitting(true);
     setErrorMessage('');
 
@@ -56,10 +78,12 @@ const EnrollModal = ({ isOpen, onClose, batchDetails = {} }) => {
       const params = new URLSearchParams();
       params.append('name', formData.name.trim());
       params.append('Name', formData.name.trim());
-      params.append('phone', formData.phone.trim());
-      params.append('Phone', formData.phone.trim());
+      params.append('phone', cleanPhone);
+      params.append('Phone', cleanPhone);
       params.append('email', formData.email.trim());
       params.append('Email', formData.email.trim());
+      params.append('city', formData.city.trim());
+      params.append('City', formData.city.trim());
       params.append('experiencelevel', formData.experiencelevel);
       params.append('ExperienceLevel', formData.experiencelevel);
       params.append('experience_level', formData.experiencelevel);
@@ -91,8 +115,8 @@ const EnrollModal = ({ isOpen, onClose, batchDetails = {} }) => {
 
   return (
     <div className="syllabus-modal-overlay enroll-modal-overlay" onClick={onClose}>
-      <div 
-        className="syllabus-modal-container enroll-modal-container" 
+      <div
+        className="syllabus-modal-container enroll-modal-container"
         onClick={(e) => e.stopPropagation()}
         style={{ maxWidth: '560px' }}
       >
@@ -109,9 +133,9 @@ const EnrollModal = ({ isOpen, onClose, batchDetails = {} }) => {
               📅 <strong>{batchDetails.date || '16 August 2026'}</strong> &nbsp;|&nbsp; ⏰ <strong>{batchDetails.timing || '10:00 AM – 11:00 AM'}</strong>
             </p>
           </div>
-          <button 
-            type="button" 
-            className="btn-close btn-close-white ms-2" 
+          <button
+            type="button"
+            className="btn-close btn-close-white ms-2"
             aria-label="Close"
             onClick={onClose}
           ></button>
@@ -121,11 +145,11 @@ const EnrollModal = ({ isOpen, onClose, batchDetails = {} }) => {
         <div className="p-4 p-md-4">
           {isSuccess ? (
             <div className="text-center py-4">
-              <div 
+              <div
                 className="d-inline-flex align-items-center justify-content-center rounded-circle mb-3 shadow-lg"
-                style={{ 
-                  width: '72px', 
-                  height: '72px', 
+                style={{
+                  width: '72px',
+                  height: '72px',
                   background: 'rgba(210, 251, 82, 0.15)',
                   border: '2px solid #d2fb52'
                 }}
@@ -138,8 +162,8 @@ const EnrollModal = ({ isOpen, onClose, batchDetails = {} }) => {
                 Our team will reach out with session details shortly.
               </p>
               <div className="d-flex justify-content-center gap-2">
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   className="btn btn-lime rounded-pill px-4 py-2 fw-semibold"
                   onClick={onClose}
                 >
@@ -177,18 +201,31 @@ const EnrollModal = ({ isOpen, onClose, batchDetails = {} }) => {
               </div>
 
               <div className="mb-3">
-                <label className="form-label text-white small fw-semibold mb-1">
-                  Phone Number (WhatsApp) <span className="text-danger">*</span>
-                </label>
+                <div className="d-flex justify-content-between align-items-center mb-1">
+                  <label className="form-label text-white small fw-semibold mb-0">
+                    Phone Number (WhatsApp) <span className="text-danger">*</span>
+                  </label>
+                  {formData.phone && (
+                    <span
+                      className={`small ${formData.phone.length === 10 ? 'text-lime' : 'text-warning'}`}
+                      style={{ fontSize: '0.75rem' }}
+                    >
+                      {formData.phone.length}/10 digits
+                    </span>
+                  )}
+                </div>
                 <div className="input-group">
                   <span className="input-group-text bg-dark border-secondary text-white-50">
                     <i className="bi bi-telephone"></i>
                   </span>
                   <input
                     type="tel"
+                    inputMode="numeric"
                     name="phone"
+                    maxLength={10}
+                    pattern="[0-9]{10}"
                     className="form-control bg-dark border-secondary text-white shadow-none"
-                    placeholder="e.g. 9876543210"
+                    placeholder="Enter 10-digit mobile number"
                     required
                     value={formData.phone}
                     onChange={handleChange}
@@ -211,6 +248,26 @@ const EnrollModal = ({ isOpen, onClose, batchDetails = {} }) => {
                     placeholder="name@example.com"
                     required
                     value={formData.email}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+
+              <div className="mb-3">
+                <label className="form-label text-white small fw-semibold mb-1">
+                  City <span className="text-danger">*</span>
+                </label>
+                <div className="input-group">
+                  <span className="input-group-text bg-dark border-secondary text-white-50">
+                    <i className="bi bi-geo-alt"></i>
+                  </span>
+                  <input
+                    type="text"
+                    name="city"
+                    className="form-control bg-dark border-secondary text-white shadow-none"
+                    placeholder="e.g. Mumbai, Pune, Bangalore"
+                    required
+                    value={formData.city}
                     onChange={handleChange}
                   />
                 </div>

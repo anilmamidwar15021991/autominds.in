@@ -824,4 +824,27 @@ h6,
 .enroll-modal-container select option {
   background-color: #141824 !important;
   color: #ffffff !important;
+}
+
+/* Batch page pills & helper styles */
+.badge-pill-custom {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 1rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  font-size: 0.85rem;
+}
+
+.hover-translate-y {
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-translate-y:hover {
+  transform: translateY(-5px);
+  border-color: rgba(210, 251, 82, 0.4) !important;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(210, 251, 82, 0.1);
 }

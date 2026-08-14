@@ -40,6 +40,7 @@ const Footer = () => {
               <li><Link to="/" className="text-white text-decoration-none hover-white">Home</Link></li>
               <li><Link to="/about" className="text-white text-decoration-none hover-white">About Us</Link></li>
               <li><Link to="/agentic-ai" className="text-white text-decoration-none hover-white">Course Catalog</Link></li>
+              <li><Link to="/batch" className="text-white text-decoration-none hover-white">Live Batches</Link></li>
               <li><Link to="/blog" className="text-white text-decoration-none hover-white">AI Blog</Link></li>
               <li><Link to="/contact" className="text-white text-decoration-none hover-white">Contact Us</Link></li>
             </ul>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 const Contact = () => {
-  const initialFormState = { name: '', email: '', phone: '', subject: 'Course Inquiry', message: '' };
+  const initialFormState = { name: '', email: '', phone: '', city: '', subject: 'Course Inquiry', message: '' };
   const [formData, setFormData] = useState(initialFormState);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submittedName, setSubmittedName] = useState('');
@@ -120,17 +120,30 @@ const Contact = () => {
                         />
                       </div>
                       <div className="col-md-6">
-                        <label className="form-label   small">Mobile No</label>
+                        <label className="form-label small">Mobile No</label>
                         <input
-                          type="number"
-                          className="form-control bg-dark border-secondary text-white" maxLength={10}
-                          placeholder="1234567890"
+                          type="tel"
+                          inputMode="numeric"
+                          maxLength={10}
+                          className="form-control bg-dark border-secondary text-white"
+                          placeholder="10-digit mobile number"
                           required
                           value={formData.phone}
-                          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                          onChange={(e) => setFormData({ ...formData, phone: e.target.value.replace(/\D/g, '').slice(0, 10) })}
                         />
                       </div>
                       <div className="col-md-6">
+                        <label className="form-label small">City</label>
+                        <input
+                          type="text"
+                          className="form-control bg-dark border-secondary text-white"
+                          placeholder="e.g. Mumbai, Pune"
+                          required
+                          value={formData.city}
+                          onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+                        />
+                      </div>
+                      <div className="col-md-12">
                         <label className="form-label small">Subject</label>
                         <select
                           className="form-select bg-dark border-secondary text-white"

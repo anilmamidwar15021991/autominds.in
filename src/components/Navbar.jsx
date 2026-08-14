@@ -85,6 +85,9 @@ const Navbar = () => {
               )}
             </div>
 
+            <NavLink to="/batch" className={({ isActive }) => `nav-pill-link ${isActive ? 'active' : ''}`}>
+              Batches
+            </NavLink>
             <NavLink to="/blog" className={({ isActive }) => `nav-pill-link ${isActive ? 'active' : ''}`}>
               Blog
             </NavLink>
@@ -126,7 +129,7 @@ const Navbar = () => {
                     type="button"
                     onClick={() => setIsMobileCourseOpen(!isMobileCourseOpen)}
                   >
-                    <i className={`bi bi-chevron-${isMobileCourseOpen ? 'up' : 'down'}`}></i>
+                    <i className={`bi ${isMobileCourseOpen ? 'bi-chevron-up' : 'bi-chevron-down'}`}></i>
                   </button>
                 </div>
 
@@ -150,6 +153,9 @@ const Navbar = () => {
                 )}
               </div>
 
+              <NavLink to="/batch" className={({ isActive }) => `nav-pill-link ${isActive ? 'active' : ''}`} onClick={closeMenu}>
+                <i className="bi bi-calendar-check me-2"></i> Batches
+              </NavLink>
               <NavLink to="/blog" className={({ isActive }) => `nav-pill-link ${isActive ? 'active' : ''}`} onClick={closeMenu}>
                 <i className="bi bi-newspaper me-2"></i> Blog
               </NavLink>
