@@ -1,22 +1,88 @@
 import React, { useState } from 'react';
 
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw0HBRIFPH9B38xMXiErcFjrecboZt_HG7C8AY9Q2jOH6cBfGT-OWVektNd7-ocHwib/exec';
+
 const Contact = () => {
-  const initialFormState = { name: '', email: '', phone: '', subject: 'Course Inquiry', message: '' };
+  const initialFormState = { name: '', email: '', phone: '', city: '', message: '' };
   const [formData, setFormData] = useState(initialFormState);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submittedName, setSubmittedName] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name === 'phone') {
+      const digitsOnly = value.replace(/\D/g, '').slice(0, 10);
+      setFormData((prev) => ({ ...prev, [name]: digitsOnly }));
+      if (digitsOnly.length === 10 && errorMessage.includes('10')) {
+        setErrorMessage('');
+      }
+      return;
+    }
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (formData.name && formData.email && formData.message) {
+    const cleanPhone = formData.phone.trim().replace(/\D/g, '');
+
+    if (cleanPhone.length < 10) {
+      setErrorMessage('Phone number must be exactly 10 digits (less than 10 entered).');
+      return;
+    }
+
+    if (cleanPhone.length > 10) {
+      setErrorMessage('Phone number must be exactly 10 digits (more than 10 entered).');
+      return;
+    }
+
+    setIsSubmitting(true);
+    setErrorMessage('');
+
+    try {
+      // Build form payload for Google Apps Script
+      const params = new URLSearchParams();
+      params.append('formType', 'Contact Inquiry');
+      params.append('FormType', 'Contact Inquiry');
+      params.append('name', formData.name.trim());
+      params.append('Name', formData.name.trim());
+      params.append('email', formData.email.trim());
+      params.append('Email', formData.email.trim());
+      params.append('phone', cleanPhone);
+      params.append('Phone', cleanPhone);
+      params.append('city', formData.city.trim());
+      params.append('City', formData.city.trim());
+      params.append('message', formData.message.trim());
+      params.append('Message', formData.message.trim());
+      params.append('course', 'General Contact Inquiry');
+      params.append('Course', 'General Contact Inquiry');
+      params.append('timestamp', new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }));
+
+      // Send to Google Sheets web app (no-cors mode to handle Google redirect safely)
+      await fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: params.toString()
+      });
+
       setSubmittedName(formData.name);
       setIsSubmitted(true);
       setFormData(initialFormState);
+    } catch (err) {
+      console.error('Error submitting contact inquiry to Google Sheets:', err);
+      setErrorMessage('Failed to send message. Please check your connection or contact us directly on WhatsApp.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   const handleResetForm = () => {
     setIsSubmitted(false);
+    setErrorMessage('');
     setFormData(initialFormState);
   };
 
@@ -64,7 +130,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <span className="small d-block text-white-50">Phone / WhatsApp</span>
-                      <a href="https://wa.me/918999442393" target="_blank" rel="noopener noreferrer" className="text-white text-decoration-none fw-bold fs-6 d-inline-flex align-items-center gap-2 hover-lime">
+                      <a href="https://wa.me/918999442393?text=Welcome%20to%20Auto%20Minds%20Academy" target="_blank" rel="noopener noreferrer" className="text-white text-decoration-none fw-bold fs-6 d-inline-flex align-items-center gap-2 hover-lime">
                         +91 8999442393
                         <i className="bi bi-box-arrow-up-right small text-lime"></i>
                       </a>
@@ -74,8 +140,8 @@ const Contact = () => {
 
                 <div className="pt-4 border-top border-secondary">
                   <h6 className="text-white fw-bold mb-3">Live Mentor Hours</h6>
-                  <p className="  small mb-0">Monday – Friday: 8:00 AM – 8:00 PM PST</p>
-                  <p className="  small mb-0">Saturday – Sunday: 10:00 AM – 4:00 PM PST</p>
+                  <p className="  small mb-0">Monday – Friday: 8:00 AM – 8:00 PM </p>
+                  <p className="  small mb-0">Saturday – Sunday: 10:00 AM – 6:00 PM </p>
                 </div>
               </div>
             </div>
@@ -96,65 +162,105 @@ const Contact = () => {
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit}>
+                    {errorMessage && (
+                      <div className="alert alert-danger py-2 small mb-3 border-0 bg-danger bg-opacity-25 text-white">
+                        <i className="bi bi-exclamation-triangle-fill me-2 text-danger"></i>
+                        {errorMessage}
+                      </div>
+                    )}
+
                     <div className="row g-3">
                       <div className="col-md-6">
-                        <label className="form-label small">Full Name</label>
+                        <label className="form-label small">Full Name <span className="text-danger">*</span></label>
                         <input
                           type="text"
+                          name="name"
                           className="form-control bg-dark border-secondary text-white"
                           placeholder="e.g. Sarah Jenkins"
                           required
                           value={formData.name}
-                          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                          onChange={handleChange}
                         />
                       </div>
                       <div className="col-md-6">
-                        <label className="form-label   small">Email Address</label>
+                        <label className="form-label small">Email Address <span className="text-danger">*</span></label>
                         <input
                           type="email"
+                          name="email"
                           className="form-control bg-dark border-secondary text-white"
                           placeholder="sarah@company.com"
                           required
                           value={formData.email}
-                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                          onChange={handleChange}
                         />
                       </div>
                       <div className="col-md-6">
-                        <label className="form-label   small">Mobile No</label>
+                        <div className="d-flex justify-content-between align-items-center mb-1">
+                          <label className="form-label small mb-0">
+                            Mobile No <span className="text-danger">*</span>
+                          </label>
+                          {formData.phone && (
+                            <span 
+                              className={`small ${formData.phone.length === 10 ? 'text-lime' : 'text-warning'}`}
+                              style={{ fontSize: '0.75rem' }}
+                            >
+                              {formData.phone.length}/10 digits
+                            </span>
+                          )}
+                        </div>
                         <input
-                          type="number"
-                          className="form-control bg-dark border-secondary text-white" maxLength={10}
-                          placeholder="1234567890"
+                          type="tel"
+                          name="phone"
+                          inputMode="numeric"
+                          maxLength={10}
+                          pattern="[0-9]{10}"
+                          className="form-control bg-dark border-secondary text-white"
+                          placeholder="10-digit mobile number"
                           required
                           value={formData.phone}
-                          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                          onChange={handleChange}
                         />
                       </div>
                       <div className="col-md-6">
-                        <label className="form-label small">Subject</label>
-                        <select
-                          className="form-select bg-dark border-secondary text-white"
-                          value={formData.subject}
-                          onChange={(e) => setFormData({ ...formData, subject: e.target.value })}>
-                          <option value="GenerativeAI">Generative AI</option>
-                          <option value="AgenticAI">Agentic AI</option>
-                          <option value="RPA">RPA</option>
-                        </select>
+                        <label className="form-label small">City <span className="text-danger">*</span></label>
+                        <input
+                          type="text"
+                          name="city"
+                          className="form-control bg-dark border-secondary text-white"
+                          placeholder="e.g. Mumbai, Pune"
+                          required
+                          value={formData.city}
+                          onChange={handleChange}
+                        />
                       </div>
                       <div className="col-12">
-                        <label className="form-label   small">Message</label>
+                        <label className="form-label small">Message <span className="text-danger">*</span></label>
                         <textarea
                           rows="4"
+                          name="message"
                           className="form-control bg-dark border-secondary text-white"
                           placeholder="How can we help you learn AI fast?"
                           required
                           value={formData.message}
-                          onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                          onChange={handleChange}
                         ></textarea>
                       </div>
                       <div className="col-12 pt-2">
-                        <button type="submit" className="btn-lime w-100 justify-content-center py-3 fs-5">
-                          Send Message <i className="bi bi-send-fill ms-2"></i>
+                        <button 
+                          type="submit" 
+                          disabled={isSubmitting}
+                          className="btn-lime w-100 justify-content-center py-3 fs-5 rounded-pill border-0 fw-bold"
+                        >
+                          {isSubmitting ? (
+                            <>
+                              <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                              Sending Message...
+                            </>
+                          ) : (
+                            <>
+                              Send Message <i className="bi bi-send-fill ms-2"></i>
+                            </>
+                          )}
                         </button>
                       </div>
                     </div>

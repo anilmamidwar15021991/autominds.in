@@ -85,6 +85,9 @@ const Navbar = () => {
               )}
             </div>
 
+            <NavLink to="/batch" className={({ isActive }) => `nav-pill-link ${isActive ? 'active' : ''}`}>
+              Batches
+            </NavLink>
             <NavLink to="/blog" className={({ isActive }) => `nav-pill-link ${isActive ? 'active' : ''}`}>
               Blog
             </NavLink>
@@ -126,7 +129,7 @@ const Navbar = () => {
                     type="button"
                     onClick={() => setIsMobileCourseOpen(!isMobileCourseOpen)}
                   >
-                    <i className={`bi bi-chevron-${isMobileCourseOpen ? 'up' : 'down'}`}></i>
+                    <i className={`bi ${isMobileCourseOpen ? 'bi-chevron-up' : 'bi-chevron-down'}`}></i>
                   </button>
                 </div>
 
@@ -150,6 +153,9 @@ const Navbar = () => {
                 )}
               </div>
 
+              <NavLink to="/batch" className={({ isActive }) => `nav-pill-link ${isActive ? 'active' : ''}`} onClick={closeMenu}>
+                <i className="bi bi-calendar-check me-2"></i> Batches
+              </NavLink>
               <NavLink to="/blog" className={({ isActive }) => `nav-pill-link ${isActive ? 'active' : ''}`} onClick={closeMenu}>
                 <i className="bi bi-newspaper me-2"></i> Blog
               </NavLink>
@@ -157,7 +163,7 @@ const Navbar = () => {
                 <i className="bi bi-envelope me-2"></i> Contact us
               </NavLink>
               <a 
-                href="https://wa.me/918999442393" 
+                href="https://wa.me/918999442393?text=Welcome%20to%20Auto%20Minds%20Academy" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="btn-whatsapp-nav mt-2 justify-content-center d-flex align-items-center gap-2"

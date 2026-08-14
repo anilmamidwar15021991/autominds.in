@@ -11,9 +11,11 @@ import workflowImg from '../assets/27e5401d70d844af82e09bcf99943593.jpg';
 import profileAiImg from '../assets/3cdcf1dfaf3e6fc0929d79351259da47.jpg';
 import networkAiImg from '../assets/3b584eaf8444c8ade13d5ff7745a40cc.jpg';
 import TechStackSection from '../components/TechStackSection';
+import EnrollModal from '../components/EnrollModal';
 
 const Home = () => {
   const [activeTab, setActiveTab] = useState('weekly');
+  const [isEnrollModalOpen, setIsEnrollModalOpen] = useState(false);
 
   const heroBadgeRef = useRef(null);
   const heroHeadingRef = useRef(null);
@@ -25,6 +27,10 @@ const Home = () => {
   const statsBannerRef = useRef(null);
   const whyHeaderRef = useRef(null);
   const whyCardsGridRef = useRef(null);
+  const workflowSectionRef = useRef(null);
+  const workflowImgRef = useRef(null);
+  const workflowContentRef = useRef(null);
+  const workflowListRef = useRef(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -142,6 +148,82 @@ const Home = () => {
             });
           }
         });
+      }
+
+      // 5. GSAP ScrollTrigger Animation for Featured Workflow Section
+      if (workflowSectionRef.current) {
+        // Image reveal with tilt/scale and subtle floating
+        if (workflowImgRef.current) {
+          gsap.fromTo(
+            workflowImgRef.current,
+            { x: -60, opacity: 0, scale: 0.92, rotateY: 10 },
+            {
+              x: 0,
+              opacity: 1,
+              scale: 1,
+              rotateY: 0,
+              duration: 1.1,
+              ease: 'power3.out',
+              scrollTrigger: {
+                trigger: workflowSectionRef.current,
+                start: 'top 80%',
+                toggleActions: 'play none none reverse'
+              }
+            }
+          );
+
+          // Subtle idle floating animation for the workflow image
+          gsap.to(workflowImgRef.current, {
+            y: -8,
+            duration: 3.5,
+            repeat: -1,
+            yoyo: true,
+            ease: 'sine.inOut',
+            delay: 1.2
+          });
+        }
+
+        // Right side content elements staggered reveal
+        if (workflowContentRef.current) {
+          const contentItems = Array.from(workflowContentRef.current.querySelectorAll('.animate-workflow-item'));
+          gsap.fromTo(
+            contentItems,
+            { y: 30, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 0.8,
+              stagger: 0.12,
+              ease: 'power3.out',
+              scrollTrigger: {
+                trigger: workflowSectionRef.current,
+                start: 'top 80%',
+                toggleActions: 'play none none reverse'
+              }
+            }
+          );
+        }
+
+        // List items staggered pop
+        if (workflowListRef.current) {
+          const listItems = Array.from(workflowListRef.current.children);
+          gsap.fromTo(
+            listItems,
+            { x: 30, opacity: 0 },
+            {
+              x: 0,
+              opacity: 1,
+              duration: 0.7,
+              stagger: 0.15,
+              ease: 'back.out(1.4)',
+              scrollTrigger: {
+                trigger: workflowListRef.current,
+                start: 'top 85%',
+                toggleActions: 'play none none reverse'
+              }
+            }
+          );
+        }
       }
     });
 
@@ -316,6 +398,56 @@ const Home = () => {
         </div>
       </section>
 
+      {/* CALL TO ACTION */}
+      <section className="my-3">
+        <div className="container">
+          <div className="glass-panel p-5 text-center position-relative overflow-hidden">
+            <div className="position-relative z-1 max-w-2xl mx-auto py-4">
+              <span className="hero-tagline-badge mb-3 d-inline-block">Ready to Start?</span>
+              <h2 className="display-6 fw-bold text-white mb-3">
+                Upcoming Batch Agentic AI Engineering
+              </h2>
+
+              {/* Batch Info Cards */}
+              <div className="d-flex flex-wrap justify-content-center gap-3 my-4">
+                <div className="d-flex align-items-center gap-2 px-3 py-2 rounded-pill bg-dark border border-secondary text-white small">
+                  <i className="bi bi-mortarboard-fill text-lime"></i>
+                  <span><strong className="text-white-50">Course:</strong> Agentic AI Engineering</span>
+                </div>
+                <div className="d-flex align-items-center gap-2 px-3 py-2 rounded-pill bg-dark border border-secondary text-white small">
+                  <i className="bi bi-calendar-event-fill text-lime"></i>
+                  <span><strong className="text-white-50">Date:</strong> 16 August 2026</span>
+                </div>
+                <div className="d-flex align-items-center gap-2 px-3 py-2 rounded-pill bg-dark border border-secondary text-white small">
+                  <i className="bi bi-clock-fill text-lime"></i>
+                  <span><strong className="text-white-50">Timing:</strong> 10:00 AM – 11:00 AM</span>
+                </div>
+              </div>
+
+              <p className="fs-5 mb-4 text-white-50">
+                Join our courses to build in-demand skills and accelerate your career with Autominds Academy today.
+              </p>
+              <div className="d-flex justify-content-center flex-wrap gap-3">
+                <button
+                  type="button"
+                  onClick={() => setIsEnrollModalOpen(true)}
+                  className="btn-lime fs-5 px-5 py-3 border-0 rounded-pill fw-semibold shadow-lg"
+                >
+                  Enroll Now <i className="bi bi-arrow-right ms-2"></i>
+                </button>
+                <Link
+                  to="/batch"
+                  className="btn-glass fs-5 px-5 py-3 border-0 rounded-pill fw-semibold shadow-lg text-decoration-none d-inline-flex align-items-center text-white"
+                >
+                  More Detail <i className="bi bi-arrow-right ms-2"></i>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
       {/* WHY CHOOSE US SECTION */}
       <section className="py-5 my-4 position-relative">
         <div className="container">
@@ -335,7 +467,7 @@ const Home = () => {
           <div className="row g-4" ref={whyCardsGridRef}>
             {/* 1. Industry Curriculum */}
             <div className="col-12 col-md-6 col-lg-4">
-              <div 
+              <div
                 className="glass-feature-card"
                 onMouseEnter={handleWhyCardMouseEnter}
                 onMouseLeave={handleWhyCardMouseLeave}
@@ -350,7 +482,7 @@ const Home = () => {
 
             {/* 2. Live Coding */}
             <div className="col-12 col-md-6 col-lg-4">
-              <div 
+              <div
                 className="glass-feature-card"
                 onMouseEnter={handleWhyCardMouseEnter}
                 onMouseLeave={handleWhyCardMouseLeave}
@@ -365,7 +497,7 @@ const Home = () => {
 
             {/* 3. Real Projects */}
             <div className="col-12 col-md-6 col-lg-4">
-              <div 
+              <div
                 className="glass-feature-card"
                 onMouseEnter={handleWhyCardMouseEnter}
                 onMouseLeave={handleWhyCardMouseLeave}
@@ -380,7 +512,7 @@ const Home = () => {
 
             {/* 4. Certificate */}
             <div className="col-12 col-md-6 col-lg-4">
-              <div 
+              <div
                 className="glass-feature-card"
                 onMouseEnter={handleWhyCardMouseEnter}
                 onMouseLeave={handleWhyCardMouseLeave}
@@ -395,7 +527,7 @@ const Home = () => {
 
             {/* 5. Placement */}
             <div className="col-12 col-md-6 col-lg-4">
-              <div 
+              <div
                 className="glass-feature-card"
                 onMouseEnter={handleWhyCardMouseEnter}
                 onMouseLeave={handleWhyCardMouseLeave}
@@ -410,7 +542,7 @@ const Home = () => {
 
             {/* 6. Mentorship */}
             <div className="col-12 col-md-6 col-lg-4">
-              <div 
+              <div
                 className="glass-feature-card"
                 onMouseEnter={handleWhyCardMouseEnter}
                 onMouseLeave={handleWhyCardMouseLeave}
@@ -426,61 +558,32 @@ const Home = () => {
         </div>
       </section>
 
-      {/* STATS BANNER */}
-      {/* <section className="py-4 border-y border-secondary bg-black" ref={statsBannerRef}>
-        <div className="container">
-          <div className="row text-center g-4">
-            <div className="col-6 col-md-3">
-              <h2 className="fw-bold text-white font-heading display-6 mb-1">15,000+</h2>
-              <p className="  small mb-0">Active Students</p>
-            </div>
-            <div className="col-6 col-md-3">
-              <h2 className="fw-bold font-heading display-6 mb-1" style={{ color: '#d2fb52' }}>98.4%</h2>
-              <p className="  small mb-0">Course Completion</p>
-            </div>
-            <div className="col-6 col-md-3">
-              <h2 className="fw-bold text-white font-heading display-6 mb-1">45+</h2>
-              <p className="  small mb-0">Hands-on AI Projects</p>
-            </div>
-            <div className="col-6 col-md-3">
-              <h2 className="fw-bold text-white font-heading display-6 mb-1">4.9 / 5.0</h2>
-              <p className="  small mb-0">User Satisfaction</p>
-            </div>
-          </div>
-        </div>
-      </section> */}
 
       {/* FEATURED WORKFLOW SECTION */}
-      <section className="py-5 my-5">
+      <section className="py-5 my-5 position-relative overflow-hidden" ref={workflowSectionRef}>
         <div className="container">
           <div className="row align-items-center g-5">
             <div className="col-lg-6">
-              <div className="position-relative">
+              <div className="position-relative" ref={workflowImgRef}>
                 <img
                   src={workflowImg}
                   alt="Software Delivery AI Flow"
-                  className="img-fluid rounded-4 border border-secondary shadow-lg"
+                  className="img-fluid rounded-4 border border-secondary shadow-lg hover-translate-y"
+                  style={{ transition: 'transform 0.4s ease, box-shadow 0.4s ease' }}
                 />
-                <div className="position-absolute bottom-0 end-0 m-3 glass-panel p-3 text-start border-0 shadow">
-                  <div className="d-flex align-items-center gap-2 mb-1">
-                    <span className="pulse-dot"></span>
-                    <strong className="text-white small">Automated CI/CD AI Pipeline</strong>
-                  </div>
-                  <p className="  extra-small mb-0">From Prompt to Production in minutes</p>
-                </div>
               </div>
             </div>
-            <div className="col-lg-6">
-              <div className="hero-tagline-badge">
+            <div className="col-lg-6" ref={workflowContentRef}>
+              <div className="hero-tagline-badge animate-workflow-item mb-3">
                 <span>AI Engineering Pipeline</span>
               </div>
-              <h2 className="display-5 fw-bold text-white mb-4">
+              <h2 className="display-5 fw-bold text-white mb-4 animate-workflow-item">
                 Learn how to build real-world AI software delivery
               </h2>
-              <p className="  fs-5 mb-4">
+              <p className="fs-5 mb-4 animate-workflow-item text-white-50">
                 We don't just teach theory. You'll code production-ready AI pipelines, test autonomous agent tools, release software with zero manual friction, and deploy end-to-end applications.
               </p>
-              <ul className="list-unstyled d-flex flex-column gap-3 mb-4 text-white">
+              <ul className="list-unstyled d-flex flex-column gap-3 mb-4 text-white" ref={workflowListRef}>
                 <li className="d-flex align-items-center gap-3">
                   <div className="bg-dark p-2 rounded-circle border border-secondary">
                     <i className="bi bi-diagram-3-fill text-lime" style={{ color: '#d2fb52' }}></i>
@@ -500,9 +603,11 @@ const Home = () => {
                   <span>Enterprise Guardrails & Evaluation Benchmarks</span>
                 </li>
               </ul>
-              <Link to="/courses" className="btn-lime text-decoration-none">
-                Explore Curriculum <i className="bi bi-chevron-right ms-1"></i>
-              </Link>
+              <div className="animate-workflow-item">
+                <Link to="/courses" className="btn-lime text-decoration-none d-inline-flex align-items-center">
+                  Explore Curriculum <i className="bi bi-chevron-right ms-1"></i>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
@@ -546,6 +651,7 @@ const Home = () => {
                     <Link to="/courses" className="btn btn-sm btn-lime rounded-pill px-3">
                       Enroll Now
                     </Link>
+
                   </div>
                 </div>
               </div>
@@ -609,31 +715,20 @@ const Home = () => {
         </div>
       </section>
 
-      {/* CALL TO ACTION */}
-      <section className="py-5 my-5">
-        <div className="container">
-          <div className="glass-panel p-5 text-center position-relative overflow-hidden">
-            <div className="position-relative z-1 max-w-2xl mx-auto py-4">
-              <span className="hero-tagline-badge">Ready to Start?</span>
-              <h2 className="display-5 fw-bold text-white mb-3">
-                Upcoming RPA Batch August 2026
-                {/* connect to whats app group whatsapp RPA */}
-              </h2>
-              <p className="  fs-5 mb-4">
-                Join over developers accelerating their career with Autominds Academy today.
-              </p>
-              <div className="d-flex justify-content-center gap-3">
-                <Link to="/courses" className="btn-lime fs-5 px-5 py-3">
-                  Enroll Now <i className="bi bi-arrow-right ms-2"></i>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Tool technology you will master */}
       <TechStackSection />
+
+      {/* Enrollment Modal */}
+      <EnrollModal
+        isOpen={isEnrollModalOpen}
+        onClose={() => setIsEnrollModalOpen(false)}
+        batchDetails={{
+          courseName: 'Agentic AI Engineering',
+          date: '16 August 2026',
+          timing: '10:00 AM to 11:00 AM'
+        }}
+      />
     </div>
   );
 };

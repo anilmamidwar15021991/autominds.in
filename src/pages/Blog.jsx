@@ -84,38 +84,6 @@ function computeRRFScore(vectorRank, bm25Rank, k = 60) {
     }
   },
   {
-    id: 3,
-    title: "5 Prompt Engineering Patterns Every Engineer Should Know",
-    category: "Prompt Design",
-    date: "Jul 22, 2026",
-    readTime: "4 min read",
-    author: "Sophia Lin",
-    authorTitle: "Prompt Engineering Specialist",
-    image: networkAiImg,
-    snippet: "From Chain-of-Thought reasoning to Structured Schema enforcement, learn how to prevent hallucinations in mission-critical applications.",
-    content: {
-      intro: "Writing prompts for production application code is radically different from chatting with a conversational AI. Production prompts require predictable outputs, zero hallucinations, and strict schema compliance.",
-      sections: [
-        {
-          heading: "1. Chain-of-Thought (CoT) with XML Tag Delimiters",
-          text: "Force the LLM to write out its reasoning inside <thinking> tags before rendering the final structured response inside <output> tags.",
-          code: `System Prompt:
-You are a senior code reviewer. 
-First, analyze the pull request inside <thinking>...</thinking>.
-Then, provide your final review inside <output>...</output>.`
-        },
-        {
-          heading: "2. Pydantic & JSON Schema Guardrails",
-          bullets: [
-            "Always pass explicit JSON schema definitions to prevent downstream JSON parsing errors.",
-            "Use fallback retry logic with validator error messages injected back into the prompt if parsing fails.",
-            "Enforce enum constraints for strict categorization tasks."
-          ]
-        }
-      ]
-    }
-  },
-  {
     id: 4,
     title: "How We Automated 80% of CI/CD Release Testing using AI Workers",
     category: "Automation",
