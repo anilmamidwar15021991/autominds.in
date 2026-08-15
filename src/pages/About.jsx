@@ -25,7 +25,7 @@ const whatMakesUsDifferent = [
   {
     icon: 'bi-check2-square',
     title: 'Assignments & Assessments',
-    desc: 'Daily coding & weekly assessments'
+    desc: 'Daily coding & weekly assessments, weekly Quizzes to make you knowledge ready'
   },
   {
     icon: 'bi-file-earmark-person-fill',
@@ -35,7 +35,7 @@ const whatMakesUsDifferent = [
   {
     icon: 'bi-briefcase-fill',
     title: 'Interview Preparation',
-    desc: 'Mock & technical interview prep'
+    desc: 'Weekly Mock & technical interview prep'
   },
   {
     icon: 'bi-person-check-fill',
@@ -46,6 +46,11 @@ const whatMakesUsDifferent = [
     icon: 'bi-rocket-takeoff-fill',
     title: 'Placement Assistance',
     desc: 'Career-focused training & referrals'
+  },
+  {
+    icon: 'bi-rocket-takeoff-fill',
+    title: 'Internship Option',
+    desc: 'Internships Provided'
   }
 ];
 

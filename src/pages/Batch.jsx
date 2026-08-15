@@ -14,7 +14,7 @@ import rajeshImg from '../assets/Mentors/Rajesh_kumar.webp';
 gsap.registerPlugin(ScrollTrigger);
 
 const batchSlots = [
-  
+
   {
     id: 1,
     batchTitle: "Weekday Evening",
@@ -32,7 +32,7 @@ const keyHighlights = [
   {
     icon: "bi-cpu-fill",
     title: "Autonomous Multi-Agent Systems",
-    desc: "Build self-directed, multi-step LLM agent graphs using LangGraph, CrewAI, and AutoGen."
+    desc: "Build self-directed, multi-step LLM agent graphs using LangGraph, Microsoft Semantic Kernel, Python and more."
   },
   {
     icon: "bi-tools",
@@ -42,12 +42,17 @@ const keyHighlights = [
   {
     icon: "bi-database-fill-check",
     title: "Vector DBs & Hybrid RAG",
-    desc: "Master ChromaDB, Pinecone, and PGVector with hybrid lexical + semantic search grounding."
+    desc: "Master ChromaDB, Qdrant, PGVector with hybrid lexical + semantic search grounding."
   },
   {
     icon: "bi-shield-check",
     title: "Guardrails & Production Evals",
     desc: "Implement NeMo Guardrails, hallucination checks, agent tracing with LangSmith, and CI/CD pipelines."
+  },
+  {
+    icon: "bi-shield-check",
+    title: "Monitoring and Observablity",
+    desc: " Implement monitoring, observability, and MLOps for AI agents with Opentelemetry,grafana, prometheus."
   }
 ];
 
@@ -138,7 +143,7 @@ const Batch = () => {
     <div className="batch-page pt-5 mt-4" ref={heroRef}>
       {/* 1. HERO BANNER */}
       <section className="position-relative py-5 overflow-hidden border-bottom border-secondary bg-dark">
-        <div 
+        <div
           className="position-absolute top-0 start-0 w-100 h-100 opacity-20 pointer-events-none"
           style={{
             backgroundImage: `url(${heroBg})`,
@@ -186,7 +191,7 @@ const Batch = () => {
                 >
                   Enroll for Live Batch <i className="bi bi-arrow-right ms-2"></i>
                 </button>
-               
+
                 <a
                   href="https://wa.me/918999442393?text=Hi%2C%20I%20want%20to%20know%20more%20about%20Agentic%20AI%20Live%20Batch"
                   target="_blank"
@@ -201,7 +206,7 @@ const Batch = () => {
             {/* Right Card / Visual */}
             <div className="col-lg-5">
               <div className="glass-panel p-4 p-md-4 rounded-4 border border-secondary shadow-lg position-relative">
-                
+
 
                 <div className="d-flex align-items-center gap-3 mb-4">
                   <img
@@ -267,16 +272,15 @@ const Batch = () => {
           <div className="row g-4" ref={cardsRef}>
             {batchSlots.map((slot) => (
               <div className="col-lg-4 col-md-6" key={slot.id}>
-                <div 
-                  className={`glass-panel p-4 rounded-4 h-100 d-flex flex-column position-relative border ${
-                    slot.featured ? 'border-lime shadow-lg' : 'border-secondary'
-                  }`}
+                <div
+                  className={`glass-panel p-4 rounded-4 h-100 d-flex flex-column position-relative border ${slot.featured ? 'border-lime shadow-lg' : 'border-secondary'
+                    }`}
                   style={{
                     backgroundColor: slot.featured ? 'rgba(210, 251, 82, 0.04)' : 'rgba(255, 255, 255, 0.03)'
                   }}
                 >
                   {slot.featured && (
-                    <span 
+                    <span
                       className="position-absolute top-0 end-0 m-3 badge bg-lime text-black fw-bold px-3 py-1 rounded-pill"
                       style={{ fontSize: '0.75rem' }}
                     >
@@ -315,9 +319,8 @@ const Batch = () => {
                     <button
                       type="button"
                       onClick={() => handleOpenEnroll(slot)}
-                      className={`w-100 py-3 rounded-pill fw-bold border-0 ${
-                        slot.featured ? 'btn-lime shadow-lg' : 'btn-glass text-white'
-                      }`}
+                      className={`w-100 py-3 rounded-pill fw-bold border-0 ${slot.featured ? 'btn-lime shadow-lg' : 'btn-glass text-white'
+                        }`}
                     >
                       Book Your Seat <i className="bi bi-arrow-right ms-1"></i>
                     </button>
@@ -344,7 +347,7 @@ const Batch = () => {
             {keyHighlights.map((item, idx) => (
               <div className="col-md-6 col-lg-3" key={idx}>
                 <div className="glass-panel p-4 rounded-4 h-100 border border-secondary transition-all hover-translate-y">
-                  <div 
+                  <div
                     className="d-inline-flex align-items-center justify-content-center rounded-3 mb-3"
                     style={{ width: '56px', height: '56px', background: 'rgba(210, 251, 82, 0.12)', border: '1px solid #d2fb52' }}
                   >
@@ -384,9 +387,9 @@ const Batch = () => {
                   style={{ width: '110px', height: '110px', objectFit: 'cover' }}
                 />
                 <h4 className="text-white fw-bold mb-1">Anil Mamidwar</h4>
-                <p className="text-lime small fw-semibold mb-3">Principal AI & Cloud Architect</p>
+                <p className="text-lime small fw-semibold mb-3">Automation Architect | IIT (AI) </p>
                 <p className="text-white-50 small mb-0" style={{ lineHeight: '1.6' }}>
-                  15+ years experience building enterprise automation architectures, vector indexing pipelines, and multi-agent production stacks.
+                  10+ years experience building enterprise automation architectures, vector indexing pipelines, and multi-agent production stacks.
                 </p>
               </div>
             </div>
@@ -401,9 +404,9 @@ const Batch = () => {
                 />
                 <h4 className="text-white fw-bold mb-1">Rajesh Kumar</h4>
                 <h4 className="text-white small mb-1">Guest Mentor</h4>
-                <p className="text-lime small fw-semibold mb-3">25+ years of Experience | IIM Alumini</p>
+                <p className="text-lime small fw-semibold mb-3">25+ years of Experience | IIM Alumini | IIT Jodhpur </p>
                 <p className="text-white-50 small mb-0" style={{ lineHeight: '1.6' }}>
-                  Specializes in LangGraph, autonomous agents, tool orchestration, and high-concurrency LLM inference deployment.
+                  Specializes in Data analysis, Data mining, wrangling and Machine learning model implementation.
                 </p>
               </div>
             </div>
