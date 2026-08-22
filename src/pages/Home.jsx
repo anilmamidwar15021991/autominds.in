@@ -290,7 +290,7 @@ const Home = () => {
               {/* MANDATORY HERO TAGLINE BANNER */}
               <div className="hero-tagline-badge" ref={heroBadgeRef}>
                 <span className="pulse-dot"></span>
-                <span>Learn AI Fast: Simple Course to Build Real Skills</span>
+                <span>Learn Production Grade AI : Simple Course to Build Real Skills</span>
               </div>
 
               {/* Reference-Inspired Massive Typography */}
@@ -298,11 +298,11 @@ const Home = () => {
                 className="display-3 fw-extrabold text-white mb-4 tracking-tight"
                 ref={heroHeadingRef}
                 style={{ fontSize: 'clamp(2.5rem, 5vw, 4.5rem)', lineHeight: 1.08 }}
-              >Learn AI Fast: Simple Course to Build Real Skills<span style={{ color: '#d2fb52' }}>.</span>
+              >Learn Production Grade AI Fast: Simple Course to Build Real Skills<span style={{ color: '#d2fb52' }}>.</span>
               </h1>
 
               <p className="fs-5   mb-5 pe-lg-5" ref={heroSubRef} style={{ maxWidth: '620px', lineHeight: 1.6 }}>
-                AI-first academy powering next-gen developers & business teams. General ledger of AI skills, revenue automation, and production LLM orchestration.
+                Building the next generation of AI engineers & automation professionals through practical, production-focused learning in Generative AI, Agentic AI, and intelligent automation.
               </p>
 
               <div className="d-flex flex-wrap align-items-center gap-3" ref={heroCtaRef}>
@@ -317,7 +317,7 @@ const Home = () => {
               <div className="d-flex align-items-center gap-4 mt-5 pt-3" ref={heroChecklistRef}>
                 <div className="d-flex align-items-center gap-2">
                   <i className="bi bi-check-circle-fill text-lime fs-5" style={{ color: '#d2fb52' }}></i>
-                  <span className="text-white small fw-semibold">No fluff content</span>
+                  <span className="text-white small fw-semibold">Industry Content</span>
                 </div>
                 <div className="d-flex align-items-center gap-2">
                   <i className="bi bi-check-circle-fill text-lime fs-5" style={{ color: '#d2fb52' }}></i>
