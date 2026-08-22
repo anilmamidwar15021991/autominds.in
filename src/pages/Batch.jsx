@@ -18,11 +18,11 @@ const batchSlots = [
   {
     id: 1,
     batchTitle: "Weekday Evening",
-    startDate: "16 August 2026",
-    schedule: "Monday & Saturday",
-    timing: "07:30 PM – 09:00 PM",
+    startDate: "November 2026",
+    schedule: "Monday to Saturday",
+    timing: "08:30 PM – 09:30 PM",
     mode: "Live Interactive (Zoom/Meet)",
-    duration: "10 Weeks (40+ Hours)",
+    duration: "15 Weeks ",
     statusBadge: "Enrolling Now",
     featured: false
   }
@@ -169,10 +169,10 @@ const Batch = () => {
               {/* Quick Details Pill Badges */}
               <div className="d-flex flex-wrap gap-2 mb-4 animate-hero">
                 <div className="badge-pill-custom">
-                  <i className="bi bi-calendar-event text-lime"></i> Next Batch: <strong>16 August 2026</strong>
+                  <i className="bi bi-calendar-event text-lime"></i> Next Batch: <strong>24 August 2026</strong>
                 </div>
                 <div className="badge-pill-custom">
-                  <i className="bi bi-clock text-lime"></i> Timing: <strong>10:00 AM – 11:00 AM IST</strong>
+                  <i className="bi bi-clock text-lime"></i> Timing: <strong>07:30 AM – 08:45 AM IST</strong>
                 </div>
                 <div className="badge-pill-custom">
                   <i className="bi bi-broadcast text-lime"></i> Mode: <strong>100% Live Online</strong>
@@ -225,11 +225,11 @@ const Batch = () => {
                 <div className="border-top border-secondary pt-3 mb-4">
                   <div className="d-flex justify-content-between py-2 border-bottom border-secondary border-opacity-50 text-white-50 small">
                     <span><i className="bi bi-calendar-check text-lime me-2"></i>Batch Start</span>
-                    <strong className="text-white">16 August 2026</strong>
+                    <strong className="text-white">Running</strong>
                   </div>
                   <div className="d-flex justify-content-between py-2 border-bottom border-secondary border-opacity-50 text-white-50 small">
                     <span><i className="bi bi-clock-history text-lime me-2"></i>Daily Timing</span>
-                    <strong className="text-white">10:00 AM – 11:00 AM</strong>
+                    <strong className="text-white">07:30 AM – 08:45 AM</strong>
                   </div>
                   <div className="d-flex justify-content-between py-2 border-bottom border-secondary border-opacity-50 text-white-50 small">
                     <span><i className="bi bi-laptop text-lime me-2"></i>Format</span>
@@ -250,7 +250,7 @@ const Batch = () => {
                   onClick={() => handleOpenEnroll(batchSlots[0])}
                   className="btn-lime w-100 py-3 fw-bold rounded-pill text-center shadow-lg border-0"
                 >
-                  Reserve Your Seat Now
+                  Reserve Your Seat for Next Batch
                 </button>
               </div>
             </div>
